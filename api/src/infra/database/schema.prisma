@@ -1,0 +1,136 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum Month {
+  JAN
+  FEB
+  MAR
+  APR
+  MAY
+  JUN
+  JUL
+  AUG
+  SEP
+  OCT
+  NOV
+  DEC
+}
+
+model SystemConfig {
+  id        String    @id @default(cuid())
+  key       String    @unique
+  value     String
+  valueType String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("system_configs")
+}
+
+model User {
+  id        String  @id @default(cuid())
+  email     String  @unique
+  password  String
+  firstName String
+  lastName  String
+  role      Role[]  @default([USER])
+  active    Boolean @default(false)
+
+  verifiedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  sessions Session[]
+
+  @@map("users")
+}
+
+model Session {
+  id        String @id @default(cuid())
+  ipAddress String @db.Inet
+  userAgent String
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("sessions")
+}
+
+model Associate {
+  id       String @id @default(cuid())
+  fullName String
+  email    String @unique
+  phone    String @unique
+
+  addressId String
+  address   Address @relation(fields: [addressId], references: [id])
+
+  payments Payment[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("associates")
+}
+
+model Address {
+  id           String  @id @default(cuid())
+  street       String
+  number       String
+  complement   String?
+  neighborhood String
+  city         String
+  state        String
+  zipCode      String
+
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime?   @updatedAt
+  associates Associate[]
+
+  @@map("addresses")
+}
+
+model Payment {
+  id   String   @id @default(cuid())
+  date DateTime
+
+  associateId String
+  associate   Associate @relation(fields: [associateId], references: [id])
+
+  paidMensalities Mensality[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("payments")
+}
+
+model Mensality {
+  id           String @id @default(cuid())
+  month        Month
+  year         Int
+  priceInCents BigInt
+
+  payments Payment[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@unique([month, year])
+  @@index([month, year])
+  @@map("mensalities")
+}

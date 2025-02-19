@@ -3,7 +3,14 @@
     "target": "ES2024",
     "module": "commonjs",
     "baseUrl": "./",
-    "paths": {},
+    "paths": {
+      "@core/*": [
+        "src/core/*"
+      ],
+      "@infra/*": [
+        "src/infra/*"
+      ],
+    },
     "types": [],
     "resolveJsonModule": true,
     "esModuleInterop": true,

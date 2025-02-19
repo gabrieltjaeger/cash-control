@@ -12,11 +12,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@paralleldrive/cuid2": "^2.2.2",
     "@prisma/client": "^6.3.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "swagger-ui-express": "^5.0.1",
+    "utility-types": "^3.11.0",
     "zod": "^3.24.2",
     "zod-openapi": "^4.2.3"
   },

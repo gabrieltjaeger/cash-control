@@ -2,9 +2,12 @@ import { Mensality, Month } from "@core/entities/mensality";
 import { RepositoryQueryMode } from "@core/types/repository-query-mode";
 
 export interface MensalitiesRepositoryFilterOptions {
+  id?: string;
   month?: Month;
   year?: number;
   associate?: { id: string };
+  page?: number;
+  take?: number;
 }
 
 export interface MensalitiesRepository {

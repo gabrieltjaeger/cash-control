@@ -9,7 +9,7 @@ export interface PaymentProps extends EntityRequest {
   associateId: CUID;
   associate?: Associate;
 
-  paidMensalities?: Mensality[];
+  paidMensalities?: Map<string, Mensality>;
 }
 
 export class Payment extends Entity<PaymentProps> {
@@ -33,7 +33,11 @@ export class Payment extends Entity<PaymentProps> {
     return this.props.associate ?? null;
   }
 
-  get paidMensalities(): Mensality[] | null {
-    return this.props.paidMensalities ?? null;
+  get paidMensalities(): Map<string, Mensality> {
+    return this.props.paidMensalities ?? new Map<string, Mensality>();
+  }
+
+  set paidMensalities(paidMensalities: Map<string, Mensality>) {
+    this.props.paidMensalities = paidMensalities;
   }
 }

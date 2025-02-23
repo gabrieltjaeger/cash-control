@@ -8,6 +8,8 @@ export interface PaymentsRepositoryFilterOptions {
   until?: Date;
   associate?: { id: string };
   paidMensalities?: { id: string }[];
+  page?: number;
+  take?: number;
 }
 
 export interface PaymentsRepository {

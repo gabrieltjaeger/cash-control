@@ -76,8 +76,8 @@ model Associate {
   email    String @unique
   phone    String @unique
 
-  addressId String
-  address   Address @relation(fields: [addressId], references: [id])
+  addressId String?
+  address   Address? @relation(fields: [addressId], references: [id])
 
   payments Payment[]
 

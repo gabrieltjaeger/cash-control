@@ -16,7 +16,7 @@ export class PrismaAssociateMapper {
       fullName: raw.fullName,
       email: raw.email,
       phone: raw.phone,
-      addressId: new CUID(raw.addressId),
+      addressId: raw.addressId ? new CUID(raw.addressId) : null,
       ...(raw.address && {
         address: PrismaAddressMapper.toEntity(raw.address),
       }),
@@ -41,7 +41,7 @@ export class PrismaAssociateMapper {
       fullName: associate.fullName,
       email: associate.email,
       phone: associate.phone,
-      addressId: associate.addressId.value,
+      addressId: associate.addressId ? associate.addressId.value : null,
       createdAt: associate.createdAt,
       updatedAt: associate.updatedAt,
     };

@@ -6,6 +6,8 @@ export interface AssociatesRepositoryFilterOptions {
   fullName?: string;
   email?: string;
   phone?: string;
+  page?: number;
+  take?: number;
 }
 
 export interface AssociatesRepository {

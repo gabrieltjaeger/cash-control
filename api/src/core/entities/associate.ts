@@ -1,14 +1,14 @@
-import { Address } from "@core/entities/address";
-import { Entity, EntityRequest } from "@core/entities/entity";
-import { Payment } from "@core/entities/payment";
-import { CUID } from "@core/entities/types/CUID";
+import { Address } from "../entities/address";
+import { Entity, EntityRequest } from "../entities/entity";
+import { Payment } from "../entities/payment";
+import { CUID } from "../entities/types/CUID";
 
 export interface AssociateProps extends EntityRequest {
   fullName: string;
   email: string;
   phone: string;
 
-  addressId: CUID;
+  addressId?: CUID | null;
   address?: Address;
 
   payments?: Map<string, Payment>;
@@ -43,8 +43,8 @@ export class Associate extends Entity<AssociateProps> {
     this.props.phone = phone;
   }
 
-  get addressId(): CUID {
-    return this.props.addressId;
+  get addressId(): CUID | null {
+    return this.props.addressId ?? null;
   }
 
   get address(): Address | null {

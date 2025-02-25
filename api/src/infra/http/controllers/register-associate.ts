@@ -27,12 +27,10 @@ export async function registerAssociateController(
   next: NextFunction
 ): Promise<Response | void> {
   try {
-    console.log("registerAssociateController");
     const { fullName, email, phone } = registerAssociateSchema.body.parse(
       request.body
     );
 
-    console.log("registerAssociateController", fullName, email, phone);
     const registerAssociateUseCase =
       container.resolve<RegisterAssociateUseCase>("registerAssociateUseCase");
 

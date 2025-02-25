@@ -3,7 +3,9 @@ import { createDocument } from "zod-openapi";
 import { fetchAssociateSchema } from "@infra/http/controllers/fetch-associate";
 import { listAssociatesSchema } from "@infra/http/controllers/list-associates";
 import { registerAssociateSchema } from "@infra/http/controllers/register-associate";
-import { SwaggerMapper } from "./swagger-mapper";
+import { registerMensalitySchema } from "@infra/http/controllers/register-mensality";
+
+import { SwaggerMapper } from "@infra/docs/swagger-mapper";
 
 const tags = {
   associates: "Associates",
@@ -92,6 +94,22 @@ const docs = createDocument({
           },
         },
         ...SwaggerMapper.toDocs(fetchAssociateSchema as any),
+      },
+    },
+    "/mensalities": {
+      post: {
+        tags: [tags.mensalities],
+        summary: "Register a mensality",
+        description: "Register a new mensality",
+        responses: {
+          201: {
+            description: "Mensality registered successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+        },
+        ...SwaggerMapper.toDocs(registerMensalitySchema),
       },
     },
   },

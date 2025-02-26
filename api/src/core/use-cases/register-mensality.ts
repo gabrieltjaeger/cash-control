@@ -4,7 +4,7 @@ import { MensalitiesRepository } from "@core/repositories/mensalities-repository
 interface RegisterMensalityUseCaseRequest {
   month: Month;
   year: number;
-  value: number;
+  priceInCents: bigint;
 }
 
 export class RegisterMensalityUseCase {
@@ -13,7 +13,7 @@ export class RegisterMensalityUseCase {
   async execute({
     month,
     year,
-    value,
+    priceInCents,
   }: RegisterMensalityUseCaseRequest): Promise<void> {
     const mensalityExists = await this.mensalitiesRepository.find("minimal", {
       month,
@@ -27,7 +27,7 @@ export class RegisterMensalityUseCase {
     const mensality = Mensality.create({
       month,
       year,
-      priceInCents: BigInt(value * 100),
+      priceInCents,
     });
 
     await this.mensalitiesRepository.create(mensality);

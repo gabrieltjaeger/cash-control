@@ -28,9 +28,8 @@ export const registerMensalitySchema = {
       .int()
       .positive()
       .openapi({ description: "Mensality year" }),
-    value: z
-      .number()
-      .int()
+    priceInCents: z
+      .bigint()
       .positive()
       .openapi({ description: "Mensality value in cents" }),
   }),
@@ -42,14 +41,14 @@ export async function registerMensalityController(
   next: NextFunction
 ): Promise<Response | void> {
   try {
-    const { month, year, value } = registerMensalitySchema.body.parse(
+    const { month, year, priceInCents } = registerMensalitySchema.body.parse(
       request.body
     );
 
     const registerMensalityUseCase =
       container.resolve<RegisterMensalityUseCase>("registerMensalityUseCase");
 
-    await registerMensalityUseCase.execute({ month, year, value });
+    await registerMensalityUseCase.execute({ month, year, priceInCents });
 
     return response.status(201).send();
   } catch (error) {

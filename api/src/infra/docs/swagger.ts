@@ -4,13 +4,14 @@ import { fetchAssociateSchema } from "@infra/http/controllers/fetch-associate";
 import { listAssociatesSchema } from "@infra/http/controllers/list-associates";
 import { registerAssociateSchema } from "@infra/http/controllers/register-associate";
 import { registerMensalitySchema } from "@infra/http/controllers/register-mensality";
+import { registerPaymentSchema } from "@infra/http/controllers/register-payment";
 
 import { SwaggerMapper } from "@infra/docs/swagger-mapper";
 
 const tags = {
   associates: "Associates",
-  payments: "Payments",
   mensalities: "Mensalities",
+  payments: "Payments",
 };
 
 const docs = createDocument({
@@ -110,6 +111,22 @@ const docs = createDocument({
           },
         },
         ...SwaggerMapper.toDocs(registerMensalitySchema),
+      },
+    },
+    "/payments": {
+      post: {
+        tags: [tags.payments],
+        summary: "Register a payment",
+        description: "Register a new payment",
+        responses: {
+          201: {
+            description: "Payment registered successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+        },
+        ...SwaggerMapper.toDocs(registerPaymentSchema),
       },
     },
   },

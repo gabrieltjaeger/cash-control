@@ -11,7 +11,7 @@ export class MensalityPresenter {
         id: mensality.id.value,
         month: mensality.month,
         year: mensality.year,
-        priceInCents: mensality.priceInCents,
+        priceInCents: mensality.priceInCents.toString().normalize(),
         payments: Array.from(mensality.payments).map(([_, payment]) =>
           PaymentPresenter.toDTO(payment)
         ),

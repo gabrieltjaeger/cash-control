@@ -2,6 +2,7 @@ import { createDocument } from "zod-openapi";
 
 import { fetchAssociateSchema } from "@infra/http/controllers/fetch-associate";
 import { listAssociatesSchema } from "@infra/http/controllers/list-associates";
+import { listMensalitiesSchema } from "@infra/http/controllers/list-mensalities";
 import { registerAssociateSchema } from "@infra/http/controllers/register-associate";
 import { registerMensalitySchema } from "@infra/http/controllers/register-mensality";
 import { registerPaymentSchema } from "@infra/http/controllers/register-payment";
@@ -98,6 +99,20 @@ const docs = createDocument({
       },
     },
     "/mensalities": {
+      get: {
+        tags: [tags.mensalities],
+        summary: "List mensalities",
+        description: "List all mensalities in a year",
+        responses: {
+          200: {
+            description: "Mensalities listed successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+        },
+        ...SwaggerMapper.toDocs(listMensalitiesSchema),
+      },
       post: {
         tags: [tags.mensalities],
         summary: "Register a mensality",

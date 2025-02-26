@@ -29,10 +29,14 @@ export class PrismaMensalitiesRepository implements MensalitiesRepository {
 
   async find(
     _: RepositoryQueryMode,
-    { id, month, year }: MensalitiesRepositoryFilterOptions
+    { id, month, year, associate }: MensalitiesRepositoryFilterOptions
   ): Promise<Mensality | null> {
     const mensality = await prisma.mensality.findUnique({
-      where: { id, month, year },
+      where: {
+        id,
+        payments: { some: { associateId: associate?.id } },
+        ...(month && year && { month_year: { month, year } }),
+      },
       include: { payments: true },
     });
 

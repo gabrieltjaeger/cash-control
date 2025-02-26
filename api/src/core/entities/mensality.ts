@@ -44,7 +44,7 @@ export class Mensality extends Entity<MensalityProps> {
     this.props.year = year;
   }
 
-  get priceInCents(): BigInt {
+  get priceInCents(): bigint {
     return this.props.priceInCents;
   }
 

@@ -79,7 +79,8 @@ model Associate {
   addressId String?
   address   Address? @relation(fields: [addressId], references: [id])
 
-  payments Payment[]
+  payments    Payment[]
+  mensalities AssociateMensality[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
@@ -112,7 +113,7 @@ model Payment {
   associateId String
   associate   Associate @relation(fields: [associateId], references: [id])
 
-  paidMensalities Mensality[]
+  paidMensalities PaymentMensality[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
@@ -126,7 +127,8 @@ model Mensality {
   year         Int
   priceInCents BigInt
 
-  payments Payment[]
+  payments   PaymentMensality[]
+  associates AssociateMensality[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
@@ -134,4 +136,32 @@ model Mensality {
   @@unique([month, year])
   @@index([month, year])
   @@map("mensalities")
+}
+
+model PaymentMensality {
+  paymentId   String
+  mensalityId String
+
+  payment   Payment   @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  mensality Mensality @relation(fields: [mensalityId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@id([paymentId, mensalityId])
+  @@map("payment_mensalities")
+}
+
+model AssociateMensality {
+  associateId String
+  mensalityId String
+
+  associate Associate @relation(fields: [associateId], references: [id], onDelete: Cascade)
+  mensality Mensality @relation(fields: [mensalityId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@id([associateId, mensalityId])
+  @@map("associate_mensalities")
 }

@@ -1,12 +1,12 @@
 import { Payment } from "@core/entities/payment";
 import { CUID } from "@core/entities/types/CUID";
+import { PrismaAssociateMapper } from "@infra/database/mappers/prisma-associate-mapper";
+import { PrismaPaymentMensalityMapper } from "@infra/database/mappers/prisma-payment-mensality-mapper";
 import { Prisma } from "@prisma/client";
-import { PrismaAssociateMapper } from "./prisma-associate-mapper";
-import { PrismaMensalityMapper } from "./prisma-mensality-mapper";
 
 type PrismaPayment = Prisma.PaymentGetPayload<{}> & {
   associate?: Prisma.AssociateGetPayload<{}>;
-  paidMensalities?: Prisma.MensalityGetPayload<{}>[];
+  mensalities?: Prisma.PaymentMensalityGetPayload<{}>[];
 };
 
 export class PrismaPaymentMapper {
@@ -17,12 +17,9 @@ export class PrismaPaymentMapper {
       ...(raw.associate && {
         associate: PrismaAssociateMapper.toEntity(raw.associate),
       }),
-      ...(raw.paidMensalities && {
-        paidMensalities: new Map(
-          raw.paidMensalities.map((mensality) => [
-            mensality.id,
-            PrismaMensalityMapper.toEntity(mensality),
-          ])
+      ...(raw.mensalities && {
+        mensalities: raw.mensalities.map((paymentMensality) =>
+          PrismaPaymentMensalityMapper.toEntity(paymentMensality)
         ),
       }),
       date: raw.date,

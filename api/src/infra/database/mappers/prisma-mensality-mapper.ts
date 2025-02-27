@@ -1,11 +1,8 @@
 import { Mensality } from "@core/entities/mensality";
 import { CUID } from "@core/entities/types/CUID";
-import { PrismaPaymentMapper } from "@infra/database/mappers/prisma-payment-mapper";
 import { Prisma } from "@prisma/client";
 
-type PrismaMensality = Prisma.MensalityGetPayload<{}> & {
-  payments?: Prisma.PaymentGetPayload<{}>[];
-};
+type PrismaMensality = Prisma.MensalityGetPayload<{}>;
 
 export class PrismaMensalityMapper {
   static toEntity(raw: PrismaMensality): Mensality {
@@ -14,14 +11,6 @@ export class PrismaMensalityMapper {
       month: raw.month,
       year: raw.year,
       priceInCents: raw.priceInCents,
-      ...(raw.payments && {
-        payments: new Map(
-          raw.payments.map((payment) => [
-            payment.id,
-            PrismaPaymentMapper.toEntity(payment),
-          ])
-        ),
-      }),
       createdAt: raw.createdAt,
       updatedAt: raw.updatedAt,
     });

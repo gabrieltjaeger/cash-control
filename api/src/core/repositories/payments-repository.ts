@@ -7,7 +7,7 @@ export interface PaymentsRepositoryFilterOptions {
   since?: Date;
   until?: Date;
   associate?: { id: string };
-  paidMensalities?: { id: string }[];
+  mensalities?: { id: string }[];
   page?: number;
   take?: number;
 }

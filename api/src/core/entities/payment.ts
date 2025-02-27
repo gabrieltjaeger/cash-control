@@ -1,6 +1,6 @@
 import { Associate } from "@core/entities/associate";
 import { Entity, EntityRequest } from "@core/entities/entity";
-import { Mensality } from "@core/entities/mensality";
+import { PaymentMensality } from "@core/entities/payment-mensality";
 import { CUID } from "@core/entities/types/CUID";
 
 export interface PaymentProps extends EntityRequest {
@@ -9,7 +9,7 @@ export interface PaymentProps extends EntityRequest {
   associateId: CUID;
   associate?: Associate;
 
-  paidMensalities?: Map<string, Mensality>;
+  mensalities?: PaymentMensality[];
 }
 
 export class Payment extends Entity<PaymentProps> {
@@ -33,11 +33,11 @@ export class Payment extends Entity<PaymentProps> {
     return this.props.associate ?? null;
   }
 
-  get paidMensalities(): Map<string, Mensality> {
-    return this.props.paidMensalities ?? new Map<string, Mensality>();
+  get mensalities(): PaymentMensality[] {
+    return this.props.mensalities ?? [];
   }
 
-  set paidMensalities(paidMensalities: Map<string, Mensality>) {
-    this.props.paidMensalities = paidMensalities;
+  set mensalities(mensalities: PaymentMensality[]) {
+    this.props.mensalities = mensalities;
   }
 }

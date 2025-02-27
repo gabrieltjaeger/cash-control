@@ -1,5 +1,6 @@
+import { AssociateMensality } from "@core/entities/associate-mensality";
 import { Entity, EntityRequest } from "@core/entities/entity";
-import { Payment } from "@core/entities/payment";
+import { PaymentMensality } from "@core/entities/payment-mensality";
 
 export type Month =
   | "JAN"
@@ -20,7 +21,8 @@ export interface MensalityProps extends EntityRequest {
   year: number;
   priceInCents: bigint;
 
-  payments?: Map<string, Payment>;
+  payments?: PaymentMensality[];
+  associates?: AssociateMensality[];
 }
 
 export class Mensality extends Entity<MensalityProps> {
@@ -52,11 +54,11 @@ export class Mensality extends Entity<MensalityProps> {
     this.props.priceInCents = priceInCents;
   }
 
-  get payments(): Map<string, Payment> {
-    return this.props.payments ?? new Map<string, Payment>();
+  get payments(): PaymentMensality[] {
+    return this.props.payments ?? [];
   }
 
-  set payments(payments: Map<string, Payment>) {
-    this.props.payments = payments;
+  get associates(): AssociateMensality[] {
+    return this.props.associates ?? [];
   }
 }

@@ -1,8 +1,10 @@
-import { Address } from "../entities/address";
-import { Entity, EntityRequest } from "../entities/entity";
-import { Payment } from "../entities/payment";
-import { CUID } from "../entities/types/CUID";
+import { Entity, EntityRequest } from "@core/entities/entity";
 
+import { Address } from "@core/entities/address";
+import { AssociateMensality } from "@core/entities/associate-mensality";
+import { Payment } from "@core/entities/payment";
+
+import { CUID } from "@core/entities/types/CUID";
 export interface AssociateProps extends EntityRequest {
   fullName: string;
   email: string;
@@ -11,7 +13,8 @@ export interface AssociateProps extends EntityRequest {
   addressId?: CUID | null;
   address?: Address;
 
-  payments?: Map<string, Payment>;
+  payments?: Payment[];
+  mensalities?: AssociateMensality[];
 }
 
 export class Associate extends Entity<AssociateProps> {
@@ -51,7 +54,11 @@ export class Associate extends Entity<AssociateProps> {
     return this.props.address ?? null;
   }
 
-  get payments(): Map<string, Payment> {
-    return this.props.payments ?? new Map<string, Payment>();
+  get payments(): Payment[] {
+    return this.props.payments ?? [];
+  }
+
+  get mensalities(): AssociateMensality[] {
+    return this.props.mensalities ?? [];
   }
 }

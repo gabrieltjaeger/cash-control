@@ -34,8 +34,7 @@ export class PrismaMensalitiesRepository implements MensalitiesRepository {
     const mensality = await prisma.mensality.findUnique({
       where: {
         id,
-        payments: { some: { associateId: associate?.id } },
-        ...(month && year && { month_year: { month, year } }),
+        ...(!!month && !!year && { month_year: { month, year } }),
       },
       include: { payments: true },
     });
@@ -56,7 +55,8 @@ export class PrismaMensalitiesRepository implements MensalitiesRepository {
         include: {
           ...(mode === "expanded" && { payments: true }),
           ...(mode === "deep" && {
-            payments: { include: { associate: true } },
+            payments: true,
+            associates: true,
           }),
         },
       }),

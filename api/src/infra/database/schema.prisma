@@ -113,7 +113,7 @@ model Payment {
   associateId String
   associate   Associate @relation(fields: [associateId], references: [id])
 
-  paidMensalities PaymentMensality[]
+  mensalities PaymentMensality[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt

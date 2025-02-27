@@ -25,24 +25,36 @@ export class PrismaAssociatesRepository implements AssociatesRepository {
   }
 
   async find(
-    _: RepositoryQueryMode,
-    { id, email, phone }: AssociatesRepositoryFilterOptions
+    mode: RepositoryQueryMode,
+    { id, email, phone, year }: AssociatesRepositoryFilterOptions
   ): Promise<Associate | null> {
     const associate = await prisma.associate.findUnique({
-      where: { id, email, phone },
-      include: { address: false },
+      where: { id },
     });
 
     return associate ? PrismaAssociateMapper.toEntity(associate) : null;
   }
 
   async list(
-    _: RepositoryQueryMode,
-    { page = 1, take = 10, fullName }: AssociatesRepositoryFilterOptions
+    mode: RepositoryQueryMode,
+    { page = 1, take = 10, fullName, year }: AssociatesRepositoryFilterOptions
   ): Promise<Associate[] & { next?: number | null; prev?: number | null }> {
     const [associates, count] = await Promise.all([
       prisma.associate.findMany({
         where: { fullName: { contains: fullName, mode: "insensitive" } },
+        ...(mode === "deep" &&
+          !!year && {
+            include: {
+              payments: {
+                where: { mensalities: { some: { year } } },
+                include: {
+                  mensalities: {
+                    where: { year },
+                  },
+                },
+              },
+            },
+          }),
         skip: (page - 1) * take,
         take,
         include: { address: false },

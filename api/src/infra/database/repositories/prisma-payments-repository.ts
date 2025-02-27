@@ -7,12 +7,38 @@ import {
 } from "@core/repositories/payments-repository";
 import { RepositoryQueryMode } from "@core/types/repository-query-mode";
 import { PrismaPaymentMapper } from "@infra/database/mappers/prisma-payment-mapper";
+import { PrismaPaymentMensalityMapper } from "../mappers/prisma-payment-mensality-mapper";
 
 export class PrismaPaymentsRepository implements PaymentsRepository {
   async create(payment: Payment): Promise<void> {
-    await prisma.payment.create({
-      data: PrismaPaymentMapper.toPersistence(payment),
-    });
+    await prisma
+      .$transaction([
+        prisma.payment.create({
+          data: PrismaPaymentMapper.toPersistence(payment),
+        }),
+        prisma.paymentMensality.createMany({
+          data: payment.mensalities.map((paymentMensality) =>
+            PrismaPaymentMensalityMapper.toPersistence(paymentMensality)
+          ),
+        }),
+        prisma.associateMensality.createMany({
+          data: payment.mensalities.map((paymentMensality) => ({
+            associateId: payment.associateId.value,
+            mensalityId: paymentMensality.mensalityId.value,
+          })),
+        }),
+      ])
+      .catch((error) => {
+        if (
+          error.code === "P2002" &&
+          error.meta.modelName.includes("AssociateMensality")
+        )
+          throw new Error(
+            "The associate has already paid for a mensality in this request"
+          );
+
+        throw error;
+      });
   }
 
   async update(payment: Payment): Promise<void> {
@@ -23,7 +49,17 @@ export class PrismaPaymentsRepository implements PaymentsRepository {
   }
 
   async delete(payment: Payment): Promise<void> {
-    await prisma.payment.delete({ where: { id: payment.id.value } });
+    await prisma.$transaction([
+      prisma.associateMensality.deleteMany({
+        where: {
+          mensality: { payments: { every: { paymentId: payment.id.value } } },
+        },
+      }),
+      prisma.paymentMensality.deleteMany({
+        where: { paymentId: payment.id.value },
+      }),
+      prisma.payment.delete({ where: { id: payment.id.value } }),
+    ]);
   }
 
   async find(
@@ -32,7 +68,7 @@ export class PrismaPaymentsRepository implements PaymentsRepository {
   ): Promise<Payment | null> {
     const payment = await prisma.payment.findUnique({
       where: { id, date, associateId: associate?.id },
-      include: { associate: true, paidMensalities: true },
+      include: { associate: true },
     });
 
     return payment ? PrismaPaymentMapper.toEntity(payment) : null;
@@ -48,7 +84,7 @@ export class PrismaPaymentsRepository implements PaymentsRepository {
         take,
         include: {
           ...(mode === "expanded" && { associate: true }),
-          ...(mode === "deep" && { associate: true, paidMensalities: true }),
+          ...(mode === "deep" && { associate: true, mensalities: true }),
         },
       }),
       prisma.payment.count(),

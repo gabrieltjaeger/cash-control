@@ -1,6 +1,7 @@
 import { createDocument } from "zod-openapi";
 
 import { fetchAssociateSchema } from "@infra/http/controllers/fetch-associate";
+import { fetchAssociateMensalitiesSchema } from "@infra/http/controllers/fetch-associate-mensalities";
 import { listAssociatesSchema } from "@infra/http/controllers/list-associates";
 import { listMensalitiesSchema } from "@infra/http/controllers/list-mensalities";
 import { registerAssociateSchema } from "@infra/http/controllers/register-associate";
@@ -96,6 +97,36 @@ const docs = createDocument({
           },
         },
         ...SwaggerMapper.toDocs(fetchAssociateSchema as any),
+      },
+    },
+    "/associates/{id}/mensalities": {
+      get: {
+        tags: [tags.associates],
+        summary: "Fetch associate mensalities",
+        description: "Fetch all mensalities of an associate in a year",
+        parameters: [
+          {
+            in: "path",
+            name: "id",
+            required: true,
+            schema: {
+              type: "string",
+              format: "cuid2",
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "Associate mensalities fetched successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+          404: {
+            description: "Associate not found",
+          },
+        },
+        ...SwaggerMapper.toDocs(fetchAssociateMensalitiesSchema as any),
       },
     },
     "/mensalities": {

@@ -10,6 +10,9 @@
       "@infra/*": [
         "./src/infra/*"
       ],
+      "@shared/*": [
+        "./src/shared/*"
+      ]
     },
     "types": [],
     "resolveJsonModule": true,

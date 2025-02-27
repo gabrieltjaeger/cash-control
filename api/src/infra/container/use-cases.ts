@@ -1,6 +1,7 @@
 import { asFunction, AwilixContainer } from "awilix";
 
 import { FetchAssociateUseCase } from "@core/use-cases/fetch-associate";
+import { FetchAssociateMensalitiesUseCase } from "@core/use-cases/fetch-associate-mensalities";
 import { ListAssociatesUseCase } from "@core/use-cases/list-associates";
 import { ListMensalitiesUseCase } from "@core/use-cases/list-mensalities";
 import { RegisterAssociateUseCase } from "@core/use-cases/register-associate";
@@ -17,6 +18,10 @@ export default (container: AwilixContainer): void => {
       ({ associatesRepository }) =>
         new FetchAssociateUseCase(associatesRepository)
     ),
+    fetchAssociateMensalitiesUseCase: asFunction(
+      ({ associatesRepository }) =>
+        new FetchAssociateMensalitiesUseCase(associatesRepository)
+    ),
     listAssociatesUseCase: asFunction(
       ({ associatesRepository }) =>
         new ListAssociatesUseCase(associatesRepository)
@@ -30,8 +35,12 @@ export default (container: AwilixContainer): void => {
         new ListMensalitiesUseCase(mensalitiesRepository)
     ),
     registerPaymentUseCase: asFunction(
-      ({ paymentsRepository, mensalitiesRepository }) =>
-        new RegisterPaymentUseCase(paymentsRepository, mensalitiesRepository)
+      ({ paymentsRepository, mensalitiesRepository, associatesRepository }) =>
+        new RegisterPaymentUseCase(
+          paymentsRepository,
+          mensalitiesRepository,
+          associatesRepository
+        )
     ),
   });
 };

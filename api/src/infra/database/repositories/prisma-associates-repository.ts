@@ -29,7 +29,18 @@ export class PrismaAssociatesRepository implements AssociatesRepository {
     { id, email, phone, year }: AssociatesRepositoryFilterOptions
   ): Promise<Associate | null> {
     const associate = await prisma.associate.findUnique({
-      where: { id },
+      where: { id, email, phone },
+      ...(mode === "deep" &&
+        !!year && {
+          include: {
+            mensalities: {
+              where: { mensality: { year } },
+              include: {
+                mensality: true,
+              },
+            },
+          },
+        }),
     });
 
     return associate ? PrismaAssociateMapper.toEntity(associate) : null;

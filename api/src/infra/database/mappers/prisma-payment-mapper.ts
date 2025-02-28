@@ -23,6 +23,7 @@ export class PrismaPaymentMapper {
         ),
       }),
       date: raw.date,
+      valueInCents: BigInt(raw.valueInCents),
       createdAt: raw.createdAt,
       updatedAt: raw.updatedAt,
     });
@@ -33,6 +34,7 @@ export class PrismaPaymentMapper {
       id: payment.id.value,
       associateId: payment.associateId.value,
       date: payment.date,
+      valueInCents: payment.valueInCents,
       createdAt: payment.createdAt,
       updatedAt: payment.updatedAt,
     };

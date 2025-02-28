@@ -1,7 +1,5 @@
 import { Mensality, MensalityProps } from "@core/entities/mensality";
 
-import { PaymentPresenter } from "@infra/http/presenters/payment-presenter";
-
 import { View } from "@infra/types/view";
 
 export class MensalityPresenter {
@@ -12,9 +10,6 @@ export class MensalityPresenter {
         month: mensality.month,
         year: mensality.year,
         priceInCents: mensality.priceInCents.toString().normalize(),
-        payments: Array.from(mensality.payments).map(([_, payment]) =>
-          PaymentPresenter.toDTO(payment)
-        ),
         createdAt: mensality.createdAt,
         updatedAt: mensality.updatedAt,
       };

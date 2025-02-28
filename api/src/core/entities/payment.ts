@@ -5,6 +5,7 @@ import { CUID } from "@core/entities/types/CUID";
 
 export interface PaymentProps extends EntityRequest {
   date: Date;
+  valueInCents: bigint;
 
   associateId: CUID;
   associate?: Associate;
@@ -23,6 +24,14 @@ export class Payment extends Entity<PaymentProps> {
 
   set date(date: Date) {
     this.props.date = date;
+  }
+
+  get valueInCents(): bigint {
+    return this.props.valueInCents;
+  }
+
+  set valueInCents(valueInCents: bigint) {
+    this.props.valueInCents = valueInCents;
   }
 
   get associateId(): CUID {

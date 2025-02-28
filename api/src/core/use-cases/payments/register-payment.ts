@@ -53,6 +53,10 @@ export class RegisterPaymentUseCase {
     const payment = Payment.create({
       associateId: associate.id,
       date: date || new Date(),
+      valueInCents: _mensalities.reduce(
+        (acc, mensality) => acc + mensality.priceInCents,
+        BigInt(0)
+      ),
     });
 
     payment.mensalities = _mensalities.map((mensality) =>

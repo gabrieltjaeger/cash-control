@@ -7,7 +7,7 @@ import { RegisterPaymentUseCase } from "@core/use-cases/register-payment";
 
 export const registerPaymentSchema = {
   body: z.object({
-    associateId: z.string().uuid().openapi({ description: "Associate ID" }),
+    associateId: z.string().cuid2().openapi({ description: "Associate ID" }),
     date: z.string().date().optional().openapi({ description: "Payment date" }),
     mensalities: z.array(
       z.object({

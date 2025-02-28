@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 import "zod-openapi/extend";
 
-import { ListMensalitiesUseCase } from "@core/use-cases/list-mensalities";
+import { ListMensalitiesUseCase } from "@core/use-cases/mensalities/list-mensalities";
 
 import { MensalityPresenter } from "@infra/http/presenters/mensality-presenter";
 

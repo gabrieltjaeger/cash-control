@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 import "zod-openapi/extend";
 
-import { ListAssociatesUseCase } from "@core/use-cases/list-associates";
+import { ListAssociatesUseCase } from "@core/use-cases/associates/list-associates";
 
 import { AssociatePresenter } from "@infra/http/presenters/associate-presenter";
 

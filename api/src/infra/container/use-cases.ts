@@ -1,12 +1,12 @@
 import { asFunction, AwilixContainer } from "awilix";
 
-import { FetchAssociateUseCase } from "@core/use-cases/fetch-associate";
-import { FetchAssociateMensalitiesUseCase } from "@core/use-cases/fetch-associate-mensalities";
-import { ListAssociatesUseCase } from "@core/use-cases/list-associates";
-import { ListMensalitiesUseCase } from "@core/use-cases/list-mensalities";
-import { RegisterAssociateUseCase } from "@core/use-cases/register-associate";
-import { RegisterMensalityUseCase } from "@core/use-cases/register-mensality";
-import { RegisterPaymentUseCase } from "@core/use-cases/register-payment";
+import { FetchAssociateUseCase } from "@core/use-cases/associates/fetch-associate";
+import { FetchAssociateMensalitiesUseCase } from "@core/use-cases/associates/fetch-associate-mensalities";
+import { ListAssociatesUseCase } from "@core/use-cases/associates/list-associates";
+import { RegisterAssociateUseCase } from "@core/use-cases/associates/register-associate";
+import { ListMensalitiesUseCase } from "@core/use-cases/mensalities/list-mensalities";
+import { RegisterMensalityUseCase } from "@core/use-cases/mensalities/register-mensality";
+import { RegisterPaymentUseCase } from "@core/use-cases/payments/register-payment";
 
 export default (container: AwilixContainer): void => {
   container.register({

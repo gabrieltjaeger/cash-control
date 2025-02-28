@@ -107,8 +107,9 @@ model Address {
 }
 
 model Payment {
-  id   String   @id @default(cuid())
-  date DateTime
+  id           String   @id @default(cuid())
+  date         DateTime
+  valueInCents BigInt
 
   associateId String
   associate   Associate @relation(fields: [associateId], references: [id])

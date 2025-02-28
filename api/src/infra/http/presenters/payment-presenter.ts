@@ -1,9 +1,9 @@
 import { Payment, PaymentProps } from "@core/entities/payment";
 
 import { AssociatePresenter } from "@infra/http/presenters/associate-presenter";
-import { MensalityPresenter } from "@infra/http/presenters/mensality-presenter";
 
 import { View } from "@infra/types/view";
+import { MensalityPresenter } from "./mensality-presenter";
 
 export class PaymentPresenter {
   static toDTO(payment?: Payment): View<PaymentProps> {
@@ -13,8 +13,8 @@ export class PaymentPresenter {
         date: payment.date,
         associateId: payment.associateId,
         associate: AssociatePresenter.toDTO(payment.associate ?? undefined),
-        paidMensalities: Array.from(payment.paidMensalities).map(
-          ([_, mensality]) => MensalityPresenter.toDTO(mensality)
+        mensalities: payment.mensalities.flatMap((mensality) =>
+          MensalityPresenter.toDTO(mensality.mensality ?? undefined)
         ),
         createdAt: payment.createdAt,
         updatedAt: payment.updatedAt,

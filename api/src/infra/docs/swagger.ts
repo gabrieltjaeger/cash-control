@@ -1,12 +1,12 @@
 import { createDocument } from "zod-openapi";
 
-import { fetchAssociateSchema } from "@infra/http/controllers/fetch-associate";
-import { fetchAssociateMensalitiesSchema } from "@infra/http/controllers/fetch-associate-mensalities";
-import { listAssociatesSchema } from "@infra/http/controllers/list-associates";
-import { listMensalitiesSchema } from "@infra/http/controllers/list-mensalities";
-import { registerAssociateSchema } from "@infra/http/controllers/register-associate";
-import { registerMensalitySchema } from "@infra/http/controllers/register-mensality";
-import { registerPaymentSchema } from "@infra/http/controllers/register-payment";
+import { fetchAssociateSchema } from "@infra/http/controllers/associates/fetch-associate";
+import { fetchAssociateMensalitiesSchema } from "@infra/http/controllers/associates/fetch-associate-mensalities";
+import { listAssociatesSchema } from "@infra/http/controllers/associates/list-associates";
+import { registerAssociateSchema } from "@infra/http/controllers/associates/register-associate";
+import { listMensalitiesSchema } from "@infra/http/controllers/mensalities/list-mensalities";
+import { registerMensalitySchema } from "@infra/http/controllers/mensalities/register-mensality";
+import { registerPaymentSchema } from "@infra/http/controllers/payments/register-payment";
 
 import { SwaggerMapper } from "@infra/docs/swagger-mapper";
 

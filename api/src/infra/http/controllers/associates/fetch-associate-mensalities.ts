@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 import "zod-openapi/extend";
 
-import { FetchAssociateMensalitiesUseCase } from "@core/use-cases/fetch-associate-mensalities";
+import { FetchAssociateMensalitiesUseCase } from "@core/use-cases/associates/fetch-associate-mensalities";
 
 import { AssociatePresenter } from "@infra/http/presenters/associate-presenter";
 
@@ -25,7 +25,6 @@ export async function fetchAssociateMensalitiesController(
   next: NextFunction
 ): Promise<Response | void> {
   try {
-    console.log("fetchAssociateMensalitiesController");
     const { id } = fetchAssociateMensalitiesSchema.params.parse(request.params);
     const { year } = fetchAssociateMensalitiesSchema.query.parse(request.query);
 

@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 import "zod-openapi/extend";
 
-import { RegisterMensalityUseCase } from "@core/use-cases/register-mensality";
+import { RegisterMensalityUseCase } from "@core/use-cases/mensalities/register-mensality";
 
 export const registerMensalitySchema = {
   body: z.object({

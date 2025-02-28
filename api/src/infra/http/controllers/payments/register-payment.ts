@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 import "zod-openapi/extend";
 
-import { RegisterPaymentUseCase } from "@core/use-cases/register-payment";
+import { RegisterPaymentUseCase } from "@core/use-cases/payments/register-payment";
 
 export const registerPaymentSchema = {
   body: z.object({

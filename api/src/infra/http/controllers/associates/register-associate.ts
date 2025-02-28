@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 import "zod-openapi/extend";
 
-import { RegisterAssociateUseCase } from "@core/use-cases/register-associate";
+import { RegisterAssociateUseCase } from "@core/use-cases/associates/register-associate";
 
 export const registerAssociateSchema = {
   body: z.object({

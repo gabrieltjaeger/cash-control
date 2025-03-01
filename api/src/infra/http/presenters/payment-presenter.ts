@@ -11,7 +11,7 @@ export class PaymentPresenter {
       return {
         id: payment.id.value,
         date: payment.date,
-        valueInCents: payment.valueInCents,
+        valueInCents: payment.valueInCents.toString().normalize(),
         associateId: payment.associateId,
         associate: AssociatePresenter.toDTO(payment.associate ?? undefined),
         mensalities: payment.mensalities.flatMap((mensality) =>

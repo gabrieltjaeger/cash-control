@@ -4,8 +4,11 @@ import { fetchAssociateSchema } from "@infra/http/controllers/associates/fetch-a
 import { fetchAssociateMensalitiesSchema } from "@infra/http/controllers/associates/fetch-associate-mensalities";
 import { listAssociatesSchema } from "@infra/http/controllers/associates/list-associates";
 import { registerAssociateSchema } from "@infra/http/controllers/associates/register-associate";
+
 import { listMensalitiesSchema } from "@infra/http/controllers/mensalities/list-mensalities";
 import { registerMensalitySchema } from "@infra/http/controllers/mensalities/register-mensality";
+
+import { listPaymentsSchema } from "@infra/http/controllers/payments/list-payments";
 import { registerPaymentSchema } from "@infra/http/controllers/payments/register-payment";
 
 import { SwaggerMapper } from "@infra/docs/swagger-mapper";
@@ -160,6 +163,20 @@ const docs = createDocument({
       },
     },
     "/payments": {
+      get: {
+        tags: [tags.payments],
+        summary: "List payments",
+        description: "List all payments",
+        responses: {
+          200: {
+            description: "Payments listed successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+        },
+        ...SwaggerMapper.toDocs(listPaymentsSchema),
+      },
       post: {
         tags: [tags.payments],
         summary: "Register a payment",

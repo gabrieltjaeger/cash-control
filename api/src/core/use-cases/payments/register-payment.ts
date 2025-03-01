@@ -7,7 +7,7 @@ import { PaymentsRepository } from "@core/repositories/payments-repository";
 
 interface RegisterPaymentRequest {
   associateId: string;
-  date?: Date;
+  date: Date;
   mensalities: { month: Month; year: number }[];
 }
 
@@ -52,7 +52,7 @@ export class RegisterPaymentUseCase {
 
     const payment = Payment.create({
       associateId: associate.id,
-      date: date || new Date(),
+      date,
       valueInCents: _mensalities.reduce(
         (acc, mensality) => acc + mensality.priceInCents,
         BigInt(0)

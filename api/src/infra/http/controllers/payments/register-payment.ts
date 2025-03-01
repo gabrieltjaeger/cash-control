@@ -8,7 +8,14 @@ import { RegisterPaymentUseCase } from "@core/use-cases/payments/register-paymen
 export const registerPaymentSchema = {
   body: z.object({
     associateId: z.string().cuid2().openapi({ description: "Associate ID" }),
-    date: z.string().date().optional().openapi({ description: "Payment date" }),
+    date: z
+      .string()
+      .optional()
+      .transform((value) => {
+        if (!value) return null;
+        return new Date(value);
+      })
+      .openapi({ description: "Payment date" }),
     mensalities: z.array(
       z.object({
         month: z
@@ -53,7 +60,7 @@ export async function registerPaymentController(
 
     await registerPaymentUseCase.execute({
       associateId,
-      date: date ? new Date(date) : undefined,
+      date: date ?? new Date(),
       mensalities,
     });
 

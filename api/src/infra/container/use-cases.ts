@@ -4,8 +4,11 @@ import { FetchAssociateUseCase } from "@core/use-cases/associates/fetch-associat
 import { FetchAssociateMensalitiesUseCase } from "@core/use-cases/associates/fetch-associate-mensalities";
 import { ListAssociatesUseCase } from "@core/use-cases/associates/list-associates";
 import { RegisterAssociateUseCase } from "@core/use-cases/associates/register-associate";
+
 import { ListMensalitiesUseCase } from "@core/use-cases/mensalities/list-mensalities";
 import { RegisterMensalityUseCase } from "@core/use-cases/mensalities/register-mensality";
+
+import { ListPaymentsUseCase } from "@core/use-cases/payments/list-payments";
 import { RegisterPaymentUseCase } from "@core/use-cases/payments/register-payment";
 
 export default (container: AwilixContainer): void => {
@@ -41,6 +44,9 @@ export default (container: AwilixContainer): void => {
           mensalitiesRepository,
           associatesRepository
         )
+    ),
+    listPaymentsUseCase: asFunction(
+      ({ paymentsRepository }) => new ListPaymentsUseCase(paymentsRepository)
     ),
   });
 };

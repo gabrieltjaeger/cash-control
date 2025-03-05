@@ -52,7 +52,7 @@ export async function registerMensalityController(
 
     await registerMensalityUseCase.execute({ month, year, priceInCents });
 
-    return response.status(201).send();
+    return response.sendStatus(201);
   } catch (error) {
     next(error);
   }

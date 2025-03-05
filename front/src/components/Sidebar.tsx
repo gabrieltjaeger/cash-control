@@ -10,8 +10,8 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { motion } from "framer-motion";
 import { BarChart, Calendar, CreditCard, Settings, Users } from "lucide-react";
+import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 

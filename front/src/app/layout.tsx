@@ -1,4 +1,5 @@
 import { PageTransition } from "@/components/PageTransition";
+import { Toaster } from "@/components/ui/sonner";
 
 import Sidebar from "@/components/Sidebar";
 import {
@@ -41,9 +42,10 @@ export default function RootLayout({
           <SidebarProvider>
             <Sidebar />
             <SidebarInset className="flex flex-col h-screen overflow-hidden text-foreground">
+              <Toaster richColors position="top-right" closeButton />
               <SidebarTrigger />
               <PageTransition>
-                <div className="p-4 text-foreground">{children}</div>
+                <div className="p-6 text-foreground">{children}</div>
               </PageTransition>
             </SidebarInset>
           </SidebarProvider>

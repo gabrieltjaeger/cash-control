@@ -42,7 +42,7 @@ export default function RootLayout({
           <SidebarProvider>
             <Sidebar />
             <SidebarInset className="flex flex-col h-screen overflow-hidden text-foreground">
-              <Toaster richColors position="top-right" closeButton />
+              <Toaster richColors position="top-right" closeButton expand />
               <SidebarTrigger />
               <PageTransition>
                 <div className="p-6 text-foreground">{children}</div>

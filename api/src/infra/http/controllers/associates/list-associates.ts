@@ -10,7 +10,7 @@ import { AssociatePresenter } from "@infra/http/presenters/associate-presenter";
 export const listAssociatesSchema = {
   query: z.object({
     name: z.string().optional().openapi({ description: "Associate name" }),
-    page: z.coerce.number().int().positive().default(1).optional().openapi({
+    page: z.coerce.number().int().positive().default(1).openapi({
       description: "Page number",
     }),
     perPage: z.coerce.number().int().positive().default(10).optional().openapi({

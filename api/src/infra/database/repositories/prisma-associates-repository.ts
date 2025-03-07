@@ -52,8 +52,6 @@ export class PrismaAssociatesRepository implements AssociatesRepository {
     page: number,
     take: number = 10
   ): Promise<Associate[] & { next?: number | null; prev?: number | null }> {
-    console.log({ page, take, fullName, year });
-
     const [associates, count] = await Promise.all([
       prisma.associate.findMany({
         where: {
@@ -101,10 +99,6 @@ export class PrismaAssociatesRepository implements AssociatesRepository {
         },
       }),
     ]);
-
-    // console.log({ associates });
-    console.log({ count });
-    console.log({ page, take });
 
     return Object.assign(
       associates.map(PrismaAssociateMapper.toEntity),

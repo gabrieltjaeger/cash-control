@@ -29,8 +29,6 @@ export async function listAssociatesController(
       request.query
     );
 
-    console.log({ name, page, perPage });
-
     const listAssociatesUseCase = container.resolve<ListAssociatesUseCase>(
       "listAssociatesUseCase"
     );
@@ -40,8 +38,6 @@ export async function listAssociatesController(
       page: page,
       take: perPage,
     });
-
-    console.log(associates);
 
     return response
       .status(200)

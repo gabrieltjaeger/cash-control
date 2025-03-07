@@ -48,36 +48,73 @@ export class PrismaAssociatesRepository implements AssociatesRepository {
 
   async list(
     mode: RepositoryQueryMode,
-    { page = 1, take = 10, fullName, year }: AssociatesRepositoryFilterOptions
+    { fullName, year }: AssociatesRepositoryFilterOptions,
+    page: number,
+    take: number = 10
   ): Promise<Associate[] & { next?: number | null; prev?: number | null }> {
+    console.log({ page, take, fullName, year });
+
     const [associates, count] = await Promise.all([
       prisma.associate.findMany({
-        where: { fullName: { contains: fullName, mode: "insensitive" } },
-        ...(mode === "deep" &&
-          !!year && {
-            include: {
-              payments: {
-                where: { mensalities: { some: { year } } },
-                include: {
-                  mensalities: {
-                    where: { year },
+        where: {
+          fullName: { contains: fullName, mode: "insensitive" },
+          ...(mode === "deep" &&
+            !!year && {
+              include: {
+                payments: {
+                  where: { mensalities: { some: { year } } },
+                  include: {
+                    mensalities: {
+                      where: { year },
+                    },
                   },
                 },
               },
-            },
+            }),
+        },
+
+        ...(!!page &&
+          !!take && {
+            skip: (page - 1) * take,
+            take,
           }),
-        skip: (page - 1) * take,
-        take,
+
         include: { address: false },
         orderBy: { fullName: "asc" },
       }),
-      prisma.associate.count(),
+      prisma.associate.count({
+        where: {
+          fullName: { contains: fullName, mode: "insensitive" },
+          ...(mode === "deep" &&
+            !!year && {
+              include: {
+                payments: {
+                  where: { mensalities: { some: { year } } },
+                  include: {
+                    mensalities: {
+                      where: { year },
+                    },
+                  },
+                },
+              },
+            }),
+        },
+      }),
     ]);
 
-    return Object.assign(associates.map(PrismaAssociateMapper.toEntity), {
-      next: count > page * take ? page + 1 : null,
-      prev: page > 1 ? page - 1 : null,
-    });
+    // console.log({ associates });
+    console.log({ count });
+    console.log({ page, take });
+
+    return Object.assign(
+      associates.map(PrismaAssociateMapper.toEntity),
+      page && take
+        ? {
+            next: count > page * take ? page + 1 : null,
+            prev: page > 1 ? page - 1 : null,
+          }
+        : {}
+    );
   }
 
   async delete(associate: Associate): Promise<void> {

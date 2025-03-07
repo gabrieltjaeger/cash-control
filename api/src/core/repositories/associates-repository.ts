@@ -22,7 +22,7 @@ export interface AssociatesRepository {
   list(
     mode: RepositoryQueryMode,
     filters: AssociatesRepositoryFilterOptions,
-    page?: number,
+    page: number,
     take?: number
   ): Promise<Associate[] & { next?: number | null; prev?: number | null }>;
 }

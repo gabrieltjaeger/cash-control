@@ -37,14 +37,14 @@ export default function RegisterAssociateForm() {
     try {
       const response = await registerAssociate(data);
 
-      if (response.message) {
+      if (response && response.message) {
         throw new Error(response.message);
       }
 
       form.reset();
       toast.success("Associate registered successfully");
-    } catch {
-      toast.error("Failed to register associate");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Unexpected error");
     } finally {
       return;
     }

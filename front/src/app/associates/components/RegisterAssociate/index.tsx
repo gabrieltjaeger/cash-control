@@ -9,7 +9,7 @@ import RegisterAssociateForm from "./RegisterAssociateForm";
 
 export function RegisterAssociate() {
   return (
-    <Card>
+    <Card className="overflow-x-hidden max-h-fit">
       <CardHeader>
         <CardTitle className="text-2xl font-bold">Register Associate</CardTitle>
         <CardDescription>

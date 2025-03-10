@@ -1,10 +1,12 @@
 "use client";
+
 import { motion } from "motion/react";
+import { ListAssociates } from "./components/ListAssociates";
 import { RegisterAssociate } from "./components/RegisterAssociate";
 
 export default function AssociatesPage() {
   return (
-    <div className="grid gap-6">
+    <div className="flex flex-col h-full gap-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -16,7 +18,8 @@ export default function AssociatesPage() {
           Register and manage your associates
         </p>
       </motion.div>
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="gap-6 flex flex-col-reverse md:grid md:grid-cols-2 ">
+        <ListAssociates />
         <RegisterAssociate />
       </div>
     </div>

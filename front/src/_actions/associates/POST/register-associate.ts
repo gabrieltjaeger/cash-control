@@ -9,7 +9,7 @@ interface RegisterAssociateRequest {
 }
 
 export async function registerAssociate(data: RegisterAssociateRequest) {
-  const response = fetchService.POST<RegisterAssociateRequest>({
+  const response = fetchService.POST({
     url: `${process.env.API_URL}/associates`,
     data,
   });

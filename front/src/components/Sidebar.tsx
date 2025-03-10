@@ -14,6 +14,7 @@ import { BarChart, Calendar, CreditCard, Settings, Users } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const contentItems = [
   { href: "/associates", icon: Users, label: "Associates" },
@@ -25,14 +26,25 @@ const contentItems = [
 const footerItems = [
   { href: "/config", icon: Settings, label: "System Config" },
 ];
-export default function Sidebar() {
+export default function Sidebar({
+  ...rest
+}: React.ComponentProps<typeof BaseSidebar>) {
   const pathname = usePathname();
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <BaseSidebar
       side="left"
-      variant="sidebar"
       collapsible="offcanvas"
       className="text-white"
+      {...rest}
     >
       <SidebarHeader className="p-4">
         <SidebarGroup>

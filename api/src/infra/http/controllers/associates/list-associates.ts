@@ -39,9 +39,12 @@ export async function listAssociatesController(
       take: perPage,
     });
 
-    return response
-      .status(200)
-      .send(associates.map((associate) => AssociatePresenter.toDTO(associate)));
+    return response.status(200).send({
+      associates: associates.map((associate) =>
+        AssociatePresenter.toDTO(associate)
+      ),
+      pagination: { next: associates.next, prev: associates.prev },
+    });
   } catch (error) {
     next(error);
   }

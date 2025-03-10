@@ -13,9 +13,9 @@ import "zod-openapi/extend";
 
 const app = express();
 app.use(cors());
-app.use(handler);
 app.use(express.json());
 app.use(router);
+app.use(handler);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(docs));
 dotenv.config();
 

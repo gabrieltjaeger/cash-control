@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
 
+import { DomainError } from "@core/errors/domain-error";
+
 export function handler(
   error: Error,
   request: Request,
@@ -11,6 +13,12 @@ export function handler(
     return response.status(400).send({
       message: "Invalid request data",
       errors: error.errors,
+    });
+  }
+
+  if (error instanceof DomainError) {
+    return response.status(error.status).send({
+      message: error.message,
     });
   }
 

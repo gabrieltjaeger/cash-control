@@ -1,14 +1,18 @@
-import { useSearchParams } from "next/navigation";
-import { useDebounce } from "./useDebounce";
+import { useState } from "react";
 
 export function useQueryAndPageParams() {
-  const searchParams = useSearchParams();
+  const [page, setPage] = useState(1);
+  const [query, _setQuery] = useState("");
 
-  const query = useDebounce(searchParams.get("query") as string, 500);
+  const setQuery = (query: string) => {
+    _setQuery(query);
+    setPage(1);
+  };
 
-  const page = searchParams.get("page")
-    ? parseInt(searchParams.get("page") as string)
-    : 1;
-
-  return { query, page };
+  return {
+    query,
+    setQuery,
+    page,
+    setPage,
+  };
 }

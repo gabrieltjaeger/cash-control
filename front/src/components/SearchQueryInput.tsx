@@ -1,28 +1,18 @@
 import { Input } from "@/components/ui/input";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export default function SearchQueryInput() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const pathname = usePathname();
+interface SearchQueryInputProps {
+  setQuery: (query: string) => void;
+}
 
-  const handleSearch = (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    e.preventDefault(); // Evita o comportamento de submit do formulário, se necessário
-
-    const params = new URLSearchParams(searchParams);
-    params.set("query", e.target.value);
-    params.delete("page");
-
-    // Atualiza a URL sem recarregar a página ou voltar ao topo
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+export default function SearchQueryInput({ setQuery }: SearchQueryInputProps) {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
   };
 
   return (
     <Input
       placeholder="Search..."
-      className="w-full"
+      className="w-full max-h-9 min-h-9"
       type="text"
       name="searchQuery"
       id="searchQuery"

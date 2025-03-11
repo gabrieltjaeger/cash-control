@@ -18,10 +18,10 @@ import {
 } from "@/components/ui/table";
 import { useListAssociates } from "@/hooks/associates/useListAssociates";
 import { useQueryAndPageParams } from "@/hooks/useQueryAndPageParams";
-import { Suspense } from "react";
+import { Suspense, memo } from "react";
 
-export function ListAssociates() {
-  const { page, query } = useQueryAndPageParams();
+const ListAssociates = memo(function ListAssociates() {
+  const { page, query, setPage, setQuery } = useQueryAndPageParams();
   const { data, isLoading } = useListAssociates({
     page,
     name: query,
@@ -35,16 +35,18 @@ export function ListAssociates() {
           Search for associates and view their information.
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="h-full flex flex-col justify-start items-center gap-2">
         <Suspense fallback={<LoadingSpinner />}>
-          <SearchQueryInput />
+          <SearchQueryInput setQuery={setQuery} />
           {isLoading && (
-            <div className="h-113.75 flex items-center justify-center">
+            <div className="flex items-center justify-center h-full">
               <LoadingSpinner />
             </div>
           )}
           {!isLoading && data.associates.length === 0 && (
-            <div>No associates found.</div>
+            <div className="flex items-center justify-center h-full">
+              No associates found.
+            </div>
           )}
           {!isLoading && data.associates.length > 0 && (
             <>
@@ -69,6 +71,7 @@ export function ListAssociates() {
               </Table>
               <PaginationController
                 page={page}
+                setPage={setPage}
                 next={data.pagination.next}
                 prev={data.pagination.prev}
               />
@@ -78,4 +81,6 @@ export function ListAssociates() {
       </CardContent>
     </Card>
   );
-}
+});
+
+export { ListAssociates };

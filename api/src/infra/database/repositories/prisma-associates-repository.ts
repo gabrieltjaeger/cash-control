@@ -70,13 +70,11 @@ export class PrismaAssociatesRepository implements AssociatesRepository {
               },
             }),
         },
-
         ...(!!page &&
           !!take && {
             skip: (page - 1) * take,
             take,
           }),
-
         include: { address: false },
         orderBy: { fullName: "asc" },
       }),

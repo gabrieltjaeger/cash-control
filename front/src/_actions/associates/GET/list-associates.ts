@@ -12,7 +12,6 @@ export async function listAssociates(data: ListAssociatesRequest) {
     url: `${process.env.API_URL}/associates?page=${data.page}${
       data.name ? `&name=${data.name}` : ""
     }`,
-    data,
   });
 
   return response;

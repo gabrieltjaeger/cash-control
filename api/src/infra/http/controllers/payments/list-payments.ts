@@ -63,9 +63,10 @@ export async function listPaymentsController(
       take: perPage,
     });
 
-    return response
-      .status(200)
-      .send(payments.map((payment) => PaymentPresenter.toDTO(payment)));
+    return response.status(200).send({
+      payments: payments.map((payment) => PaymentPresenter.toDTO(payment)),
+      pagination: { next: payments.next, prev: payments.prev },
+    });
   } catch (error) {
     next(error);
   }

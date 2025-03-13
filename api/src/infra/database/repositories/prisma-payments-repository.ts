@@ -76,7 +76,9 @@ export class PrismaPaymentsRepository implements PaymentsRepository {
 
   async list(
     mode: RepositoryQueryMode,
-    { since, until, page = 1, take = 10 }: PaymentsRepositoryFilterOptions
+    { since, until }: PaymentsRepositoryFilterOptions,
+    page: number,
+    take: number = 10
   ): Promise<Payment[] & { next?: number | null; prev?: number | null }> {
     const [payments, count] = await Promise.all([
       prisma.payment.findMany({
@@ -86,8 +88,11 @@ export class PrismaPaymentsRepository implements PaymentsRepository {
             ...(!!until && { lte: until }),
           },
         },
-        skip: (page - 1) * take,
-        take,
+        ...(!!page &&
+          !!take && {
+            skip: (page - 1) * take,
+            take,
+          }),
         include: {
           ...(mode === "expanded" && { associate: true }),
           ...(mode === "deep" && { associate: true, mensalities: true }),

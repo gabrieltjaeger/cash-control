@@ -44,14 +44,18 @@ export class PrismaMensalitiesRepository implements MensalitiesRepository {
 
   async list(
     mode: RepositoryQueryMode,
-    { page = 1, take = 10, year }: MensalitiesRepositoryFilterOptions
+    { year }: MensalitiesRepositoryFilterOptions,
+    page: number,
+    take: number = 10
   ): Promise<Mensality[] & { next?: number | null; prev?: number | null }> {
     const [mensalities, count] = await Promise.all([
       prisma.mensality.findMany({
         ...(year && { where: { year } }),
-        skip: (page - 1) * take,
-        take,
-
+        ...(!!page &&
+          !!take && {
+            skip: (page - 1) * take,
+            take,
+          }),
         include: {
           ...(mode === "expanded" && { payments: true }),
           ...(mode === "deep" && {

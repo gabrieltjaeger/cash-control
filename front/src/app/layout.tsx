@@ -36,19 +36,16 @@ export default function RootLayout({
   return (
     <html lang="pt-br" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br h-full`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative min-h-screen h-full`}
       >
         <ThemeProvider>
-          <SidebarProvider>
-            <Sidebar
-              variant="floating"
-              className="bg-[var(--background)] text-[#f1f5f9]"
-            />
+          <SidebarProvider className="bg-gradient-to-br from-background/80 via-background/50 to-background/80 backdrop-blur-3xl">
+            <Sidebar variant="floating" className="text-[#f1f5f9]" />
             <SidebarInset className="flex flex-col min-h-screen overflow-hidden text-foreground">
               <Toaster richColors position="top-right" closeButton expand />
               <SidebarTrigger />
               <PageTransition>
-                <div className="p-6 text-foreground h-full">{children}</div>
+                <div className="p-6 text-foreground  h-full">{children}</div>
               </PageTransition>
             </SidebarInset>
           </SidebarProvider>

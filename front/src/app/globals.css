@@ -4,6 +4,10 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+.glass {
+  @apply bg-background/10 backdrop-blur-lg border border-border/20;
+}
+
 ::-webkit-scrollbar {
   width: 4px;
 }
@@ -35,6 +39,39 @@
   );
 }
 
+body {
+  @apply bg-background text-foreground;
+  background-image: radial-gradient(
+      at 27% 37%,
+      hsla(215, 98%, 61%, 0.05) 0px,
+      transparent 50%
+    ),
+    radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 0.05) 0px, transparent 50%),
+    radial-gradient(at 52% 99%, hsla(354, 98%, 61%, 0.05) 0px, transparent 50%),
+    radial-gradient(at 10% 29%, hsla(256, 96%, 67%, 0.05) 0px, transparent 50%),
+    radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 0.05) 0px, transparent 50%),
+    radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 0.05) 0px, transparent 50%),
+    radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 0.05) 0px, transparent 50%);
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+[data-theme="dark"] body {
+  @apply bg-background text-foreground;
+  background-image: radial-gradient(
+      at 27% 37%,
+      hsla(215, 98%, 61%, 0.15) 0px,
+      transparent 50%
+    ),
+    radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 52% 99%, hsla(354, 98%, 61%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 10% 29%, hsla(256, 96%, 67%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 0.15) 0px, transparent 50%);
+}
+
 @theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -52,11 +89,11 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --background: hsla(0 0% 100%);
+  --background: hsla(0 0% 99.99%);
   --foreground: hsla(222.2 84% 4.9%);
-  --card: hsla(0 0% 100%);
+  --card: hsla(0 0% 99.99%);
   --card-foreground: hsla(222.2 84% 4.9%);
-  --popover: hsla(0 0% 100%);
+  --popover: hsla(0 0% 99.99%);
   --popover-foreground: hsla(222.2 84% 4.9%);
   --primary: hsla(263.4 70% 50.4%);
   --primary-foreground: #f8fafc;

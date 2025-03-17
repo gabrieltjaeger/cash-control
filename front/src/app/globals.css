@@ -4,6 +4,10 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+.glass {
+  @apply bg-background/10 backdrop-blur-lg border border-border/20;
+}
+
 ::-webkit-scrollbar {
   width: 4px;
 }
@@ -85,11 +89,11 @@ body {
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --background: hsla(0 0% 100%);
+  --background: hsla(0 0% 99.99%);
   --foreground: hsla(222.2 84% 4.9%);
-  --card: hsla(0 0% 100%);
+  --card: hsla(0 0% 99.99%);
   --card-foreground: hsla(222.2 84% 4.9%);
-  --popover: hsla(0 0% 100%);
+  --popover: hsla(0 0% 99.99%);
   --popover-foreground: hsla(222.2 84% 4.9%);
   --primary: hsla(263.4 70% 50.4%);
   --primary-foreground: #f8fafc;

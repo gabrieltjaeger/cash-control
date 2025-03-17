@@ -1,12 +1,9 @@
 import { PageTransition } from "@/components/PageTransition";
 import { Toaster } from "@/components/ui/sonner";
 
+import { Header } from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -40,12 +37,17 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <SidebarProvider className="bg-gradient-to-br from-background/80 via-background/50 to-background/80 backdrop-blur-3xl">
-            <Sidebar variant="floating" className="text-[#f1f5f9]" />
-            <SidebarInset className="flex flex-col min-h-screen overflow-hidden text-foreground">
+            <Sidebar
+              variant="floating"
+              className="text-[#f1f5f9] data-[shown=expanded]:sticky"
+            />
+            <SidebarInset className="flex flex-col min-h-screen text-foreground bg-inherit">
+              <Header />
               <Toaster richColors position="top-right" closeButton expand />
-              <SidebarTrigger />
               <PageTransition>
-                <div className="p-6 text-foreground  h-full">{children}</div>
+                <div className="p-6 py-4.5 text-foreground h-full bg-inherit overflow-y-hidden">
+                  {children}
+                </div>
               </PageTransition>
             </SidebarInset>
           </SidebarProvider>

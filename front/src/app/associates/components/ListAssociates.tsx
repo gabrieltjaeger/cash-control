@@ -28,7 +28,7 @@ const ListAssociates = memo(function ListAssociates() {
   });
 
   return (
-    <Card className="overflow-x-hidden">
+    <Card className="overflow-x-hidden col-span-2 lg:col-span-3">
       <CardHeader>
         <CardTitle className="text-2xl font-bold">List Associates</CardTitle>
         <CardDescription>

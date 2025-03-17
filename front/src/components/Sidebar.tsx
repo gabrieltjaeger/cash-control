@@ -40,12 +40,7 @@ export default function Sidebar({
   if (!mounted) return null;
 
   return (
-    <BaseSidebar
-      side="left"
-      collapsible="offcanvas"
-      className="text-white"
-      {...rest}
-    >
+    <BaseSidebar side="left" className="text-white" {...rest}>
       <SidebarHeader className="p-4">
         <SidebarGroup>
           <SidebarGroupContent>

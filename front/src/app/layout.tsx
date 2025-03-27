@@ -46,7 +46,7 @@ export default function RootLayout({
               <Toaster richColors position="top-right" closeButton expand />
               <PageTransition>
                 <div className="p-6 py-4.5 text-foreground h-full bg-inherit overflow-y-hidden">
-                  {children}
+                  <div className="flex flex-col h-full gap-3.5">{children}</div>
                 </div>
               </PageTransition>
             </SidebarInset>

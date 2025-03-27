@@ -1,3 +1,5 @@
+"use client";
+
 import { PaymentsTable } from "@/app/payments/components/PaymentsTable";
 import { YearPicker } from "@/components/ui/year-picker";
 import { useState } from "react";

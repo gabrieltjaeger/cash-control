@@ -6,7 +6,7 @@ import { RegisterAssociate } from "./components/RegisterAssociate";
 
 export default function AssociatesPage() {
   return (
-    <div className="flex flex-col h-full gap-3.5">
+    <>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -22,6 +22,6 @@ export default function AssociatesPage() {
         <RegisterAssociate />
         <ListAssociates />
       </div>
-    </div>
+    </>
   );
 }

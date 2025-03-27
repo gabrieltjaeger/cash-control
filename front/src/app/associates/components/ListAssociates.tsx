@@ -1,5 +1,3 @@
-"use client";
-
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import PaginationController from "@/components/PaginationController";
 import SearchQueryInput from "@/components/SearchQueryInput";
@@ -28,6 +26,8 @@ const ListAssociates = memo(function ListAssociates() {
     page,
     name: query,
   });
+
+  console.log(page);
 
   return (
     <Card className="overflow-x-hidden col-span-2 lg:col-span-3">

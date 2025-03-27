@@ -1,3 +1,5 @@
+"use client";
+
 import { registerAssociate } from "@/_actions/associates/POST/register-associate";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { Button } from "@/components/ui/button";

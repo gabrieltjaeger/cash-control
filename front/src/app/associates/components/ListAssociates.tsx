@@ -1,3 +1,5 @@
+"use client";
+
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import PaginationController from "@/components/PaginationController";
 import SearchQueryInput from "@/components/SearchQueryInput";

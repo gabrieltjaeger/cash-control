@@ -2,7 +2,7 @@
 
 import fetchService from "@/services/fetch-service";
 
-interface ListMensalitiesRequest {
+export interface ListMensalitiesRequest {
   year: number;
 }
 

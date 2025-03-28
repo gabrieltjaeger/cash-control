@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import { useListPayments } from "@/hooks/payments/useListPayments";
 import { useQueryAndPageParams } from "@/hooks/useQueryAndPageParams";
+import { formatPrice } from "@/lib/format-price";
 import { Trash2 as Trash } from "lucide-react";
 
 interface PaymentsTableProps {
@@ -62,12 +63,7 @@ export function PaymentsTable({ selectBy, date }: PaymentsTableProps) {
           {data.payments.map((payment) => (
             <TableRow key={payment.id}>
               <TableCell>{payment.associate?.fullName}</TableCell>
-              <TableCell>
-                {(BigInt(payment.valueInCents) / 1000n).toLocaleString(locale, {
-                  style: "currency",
-                  currency: "BRL",
-                })}
-              </TableCell>
+              <TableCell>{formatPrice(payment.valueInCents, "BRL")}</TableCell>
               <TableCell>
                 {new Date(payment.date).toLocaleDateString(locale, {
                   day: "2-digit",

@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import RegisterMensalityForm from "./RegisterMensalityForm";
 
 export default function RegisterMensality() {
   return (
@@ -17,7 +18,9 @@ export default function RegisterMensality() {
           Set the fee amount for a specific month.
         </CardDescription>
       </CardHeader>
-      <CardContent></CardContent>
+      <CardContent>
+        <RegisterMensalityForm />
+      </CardContent>
     </Card>
   );
 }

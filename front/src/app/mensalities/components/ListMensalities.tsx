@@ -18,25 +18,11 @@ import {
 } from "@/components/ui/table";
 
 import { YearPicker } from "@/components/ui/year-picker";
-import { Month } from "@/types/month";
 import { Suspense, useState } from "react";
 
 import { useListMensalities } from "@/hooks/mensalities/useListMensalities";
-
-const months: Month[] = [
-  "JAN",
-  "FEB",
-  "MAR",
-  "APR",
-  "MAY",
-  "JUN",
-  "JUL",
-  "AUG",
-  "SEP",
-  "OCT",
-  "NOV",
-  "DEC",
-];
+import { formatPrice } from "@/lib/format-price";
+import { months } from "@/lib/month";
 
 export default function ListMensalities() {
   const [date, setDate] = useState<Date>(new Date());
@@ -90,13 +76,7 @@ export default function ListMensalities() {
                     return (
                       <TableCell key={month} className="text-center">
                         {mensality
-                          ? BigInt(mensality.priceInCents).toLocaleString(
-                              "pt-BR",
-                              {
-                                style: "currency",
-                                currency: "BRL",
-                              }
-                            )
+                          ? formatPrice(mensality.priceInCents, "BRL")
                           : "-"}
                       </TableCell>
                     );

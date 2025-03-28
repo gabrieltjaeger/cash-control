@@ -1,8 +1,8 @@
-"user server";
+"use server";
 
 import fetchService from "@/services/fetch-service";
 
-interface FetchAssociateMensalitiesRequest {
+export interface FetchAssociateMensalitiesRequest {
   id: string;
   year: number;
 }

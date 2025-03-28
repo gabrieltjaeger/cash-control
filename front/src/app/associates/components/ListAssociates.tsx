@@ -27,8 +27,6 @@ const ListAssociates = memo(function ListAssociates() {
     name: query,
   });
 
-  console.log(page);
-
   return (
     <Card className="overflow-x-hidden col-span-2 lg:col-span-3">
       <CardHeader>

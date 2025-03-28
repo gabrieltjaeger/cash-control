@@ -29,8 +29,7 @@ export const registerMensalitySchema = {
       .positive()
       .openapi({ description: "Mensality year" }),
     priceInCents: z.coerce
-      .number()
-      .int()
+      .bigint()
       .positive()
       .transform((value) => BigInt(value))
       .openapi({ description: "Mensality value in cents" }),

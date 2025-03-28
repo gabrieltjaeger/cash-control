@@ -1,3 +1,5 @@
+"use client";
+
 import PageHeaderInfo from "@/components/PageHeaderInfo";
 import { ListAssociates } from "./components/ListAssociates";
 import { RegisterAssociate } from "./components/RegisterAssociate";

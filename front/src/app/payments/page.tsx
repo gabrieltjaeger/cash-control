@@ -1,3 +1,5 @@
+"use client";
+
 import { ListPayments } from "@/app/payments/components/ListPayments";
 import PageHeaderInfo from "@/components/PageHeaderInfo";
 

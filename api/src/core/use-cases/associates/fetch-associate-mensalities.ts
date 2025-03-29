@@ -16,6 +16,13 @@ export class FetchAssociateMensalitiesUseCase {
 
     if (!associate) throw new Error("Associate not found");
 
-    return { associate };
+    if (associate.mensalities.length === 0)
+      throw new Error("Mensalities not found");
+
+    const mensalities = associate.mensalities.map(
+      (associateMensality) => associateMensality.mensality
+    );
+
+    return mensalities;
   }
 }

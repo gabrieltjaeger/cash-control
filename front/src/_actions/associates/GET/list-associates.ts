@@ -2,7 +2,7 @@
 
 import fetchService from "@/services/fetch-service";
 
-interface ListAssociatesRequest {
+export interface ListAssociatesRequest {
   page: number;
   name?: string;
 }

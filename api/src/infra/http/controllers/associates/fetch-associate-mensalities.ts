@@ -4,8 +4,7 @@ import { z } from "zod";
 import "zod-openapi/extend";
 
 import { FetchAssociateMensalitiesUseCase } from "@core/use-cases/associates/fetch-associate-mensalities";
-
-import { AssociatePresenter } from "@infra/http/presenters/associate-presenter";
+import { MensalityPresenter } from "@infra/http/presenters/mensality-presenter";
 
 export const fetchAssociateMensalitiesSchema = {
   params: z.object({
@@ -33,14 +32,16 @@ export async function fetchAssociateMensalitiesController(
         "fetchAssociateMensalitiesUseCase"
       );
 
-    const { associate } = await fetchAssociateMensalitiesUseCase.execute({
+    const mensalities = await fetchAssociateMensalitiesUseCase.execute({
       id,
       year,
     });
 
     return response
       .status(200)
-      .send(AssociatePresenter.toDTO(associate, ["payments"]));
+      .send(
+        mensalities.map((mensality) => MensalityPresenter.toDTO(mensality!))
+      );
   } catch (error) {
     next(error);
   }

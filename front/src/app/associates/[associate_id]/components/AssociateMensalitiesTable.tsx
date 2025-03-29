@@ -1,3 +1,4 @@
+"use client";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -17,6 +18,7 @@ import { YearPicker } from "@/components/ui/year-picker";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { months } from "@/lib/month";
 import { Month } from "@/types/month";
+import { motion } from "motion/react";
 
 interface AssociateMensalitiesTableProps {
   associateId: string;
@@ -32,54 +34,61 @@ export default function AssociateMensalitiesTable({
   });
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Mensality History</CardTitle>
-      </CardHeader>
-      <CardContent className="flex flex-col justify-start items-start gap-2">
-        <YearPicker
-          className="w-full"
-          value={date}
-          onChange={(newDate) => {
-            if (newDate) setDate(newDate);
-          }}
-        />
-        {isLoading && <LoadingSpinner />}
-        {!isLoading && !data && (
-          <div className="flex items-center justify-center h-full">
-            Some error occurred while fetching mensalities.
-          </div>
-        )}
-        {!isLoading && data && (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Month</TableHead>
-                <TableHead>Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {months.map((month: Month) => {
-                const isPaid = data.some(
-                  (mensality: MensalityDTO) =>
-                    mensality.month === month &&
-                    mensality.year === date.getFullYear()
-                );
-                return (
-                  <TableRow key={month}>
-                    <TableCell>{month}</TableCell>
-                    <TableCell>
-                      <Badge variant={isPaid ? "success" : "destructive"}>
-                        {isPaid ? "Paid" : "Pending"}
-                      </Badge>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        )}
-      </CardContent>
-    </Card>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+      className="overflow-x-hidden col-span-2 lg:col-span-1"
+    >
+      <Card>
+        <CardHeader>
+          <CardTitle>Mensality History</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col justify-start items-start gap-2">
+          <YearPicker
+            className="w-full"
+            value={date}
+            onChange={(newDate) => {
+              if (newDate) setDate(newDate);
+            }}
+          />
+          {isLoading && <LoadingSpinner />}
+          {!isLoading && !data && (
+            <div className="flex items-center justify-center h-full">
+              Some error occurred while fetching mensalities.
+            </div>
+          )}
+          {!isLoading && data && (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Month</TableHead>
+                  <TableHead>Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {months.map((month: Month) => {
+                  const isPaid = data.some(
+                    (mensality: MensalityDTO) =>
+                      mensality.month === month &&
+                      mensality.year === date.getFullYear()
+                  );
+                  return (
+                    <TableRow key={month}>
+                      <TableCell>{month}</TableCell>
+                      <TableCell>
+                        <Badge variant={isPaid ? "success" : "destructive"}>
+                          {isPaid ? "Paid" : "Pending"}
+                        </Badge>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          )}
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }

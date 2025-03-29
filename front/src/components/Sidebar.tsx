@@ -10,7 +10,7 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { BarChart, Calendar, CreditCard, Settings, Users } from "lucide-react";
+import { Calendar, CreditCard, Settings, Users } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -20,12 +20,12 @@ const contentItems = [
   { href: "/associates", icon: Users, label: "Associates" },
   { href: "/payments", icon: CreditCard, label: "Payments" },
   { href: "/mensalities", icon: Calendar, label: "Mensalities" },
-  { href: "/analytics", icon: BarChart, label: "Analytics" },
 ];
 
 const footerItems = [
-  { href: "/config", icon: Settings, label: "System Config" },
+  { href: "/settings", icon: Settings, label: "System Settings" },
 ];
+
 export default function Sidebar({
   ...rest
 }: React.ComponentProps<typeof BaseSidebar>) {

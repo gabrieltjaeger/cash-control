@@ -62,7 +62,7 @@ services:
         condition: service_healthy
       cache:
         condition: service_started
-    profiles: ["production"]
+    profiles: ["production", "deploy"]
     command: sh -c "npx prisma migrate deploy && pnpm start"
 
   development-api:

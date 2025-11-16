@@ -9,11 +9,9 @@ export function useQueryAndPageParams() {
     setPage(1);
   };
 
-  const setPage = (value: number) => {
-    if (value < 1) {
-      value = 1;
-    }
-    _setPage(value);
+  const setPage = (newPage: number) => {
+    const validPage = Math.max(1, newPage);
+    _setPage(validPage);
   };
 
   return {

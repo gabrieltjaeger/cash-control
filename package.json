@@ -14,8 +14,8 @@
     "logs:front": "docker-compose logs -f development-front",
     "logs:db": "docker-compose logs -f database",
     "db:only": "docker-compose --profile development up database cache smtp",
-    "prisma:studio": "cd api && pnpm prisma:studio",
-    "prisma:migrate": "cd api && pnpm prisma:migrate"
+    "prisma:studio": "pnpm --filter api prisma:studio",  
+    "prisma:migrate": "pnpm --filter api prisma:migrate"
   },
   "description": "Cash Control - Gerenciamento de mensalidades",
   "author": "gabrieltjaeger"

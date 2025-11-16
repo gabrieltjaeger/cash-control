@@ -1,6 +1,13 @@
-# Add root .env to gitignore
 .env
 .env.local
 .env.*.local
 
-# Existing ignores continue below...
+/node_modules
+
+**/node_modules
+
+/.next
+/.next/**
+**/.next/**
+
+/api/.pnpm-store

@@ -68,6 +68,7 @@ services:
   development-api:
     <<: *api
     container_name: cash-control-dev-api
+    working_dir: /app/api
     environment:
       NODE_ENV: development
       API_PORT: ${API_PORT:-8000}
@@ -80,8 +81,7 @@ services:
       REDIS_HOST: cache
       REDIS_PORT: 6379
     volumes:
-      - ./api:/app
-      - /app/node_modules
+      - ./:/app
     depends_on:
       - smtp
     profiles: ["development"]
@@ -109,15 +109,14 @@ services:
     build:
       context: ./front
       dockerfile: Dockerfile
+    working_dir: /app/front
     environment:
       NODE_ENV: development
       API_URL: http://development-api:8000
     ports:
       - "3000:3000"
     volumes:
-      - ./front:/app
-      - /app/node_modules
-      - /app/.next
+      - ./:/app
     depends_on:
       - development-api
     profiles: ["development"]

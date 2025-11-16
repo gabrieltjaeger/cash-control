@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev -H 0.0.0.0",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -H 0.0.0.0",
     "lint": "next lint"
   },
   "dependencies": {
@@ -19,6 +19,7 @@
     "@radix-ui/react-slot": "^1.1.2",
     "@radix-ui/react-tabs": "^1.1.3",
     "@radix-ui/react-tooltip": "^1.1.8",
+    "@tanstack/react-query": "^5.90.9",
     "babel-plugin-react-compiler": "^19.0.0-beta-40c6c23-20250301",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -39,14 +40,14 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
+    "@types/node": "^20.19.25",
+    "@types/react": "^19.2.5",
     "@types/react-dom": "^19",
     "dotenv": "^16.4.7",
     "eslint": "^9",
     "eslint-config-next": "15.2.0-canary.49",
     "orval": "^7.6.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5.9.3"
   }
 }

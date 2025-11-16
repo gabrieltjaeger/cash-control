@@ -1,0 +1,22 @@
+{
+  "name": "cash-control",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "docker-compose --profile development up",
+    "dev:build": "docker-compose --profile development up --build",
+    "deploy": "docker-compose --profile deploy up -d",
+    "deploy:build": "docker-compose --profile deploy up -d --build",
+    "down": "docker-compose down",
+    "down:volumes": "docker-compose down -v",
+    "logs": "docker-compose logs -f",
+    "logs:api": "docker-compose logs -f development-api",
+    "logs:front": "docker-compose logs -f development-front",
+    "logs:db": "docker-compose logs -f database",
+    "db:only": "docker-compose --profile development up database cache smtp",
+    "prisma:studio": "pnpm --filter api prisma:studio",
+    "prisma:migrate": "pnpm --filter api prisma:migrate"
+  },
+  "description": "Cash Control - Gerenciamento de mensalidades",
+  "author": "gabrieltjaeger"
+}

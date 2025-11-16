@@ -2,7 +2,7 @@
 
 import fetchService from "@/services/fetch-service";
 
-interface FetchAssociateRequest {
+export interface FetchAssociateRequest {
   id: string;
 }
 

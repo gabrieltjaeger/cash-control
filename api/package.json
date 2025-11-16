@@ -5,7 +5,12 @@
   "scripts": {
     "dev": "tsx watch src/infra/server.ts",
     "start": "node dist/infra/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prisma:generate": "prisma generate --schema=src/infra/database/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --schema=src/infra/database/schema.prisma",
+    "prisma:deploy": "prisma migrate deploy --schema=src/infra/database/schema.prisma",
+    "prisma:studio": "prisma studio --schema=src/infra/database/schema.prisma"
   },
   "keywords": [],
   "author": "gabrieltjaeger",

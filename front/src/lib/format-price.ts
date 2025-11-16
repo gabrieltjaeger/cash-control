@@ -1,7 +1,8 @@
 export function formatPrice(priceInCents: string, currency: string): string {
   const price = BigInt(priceInCents || "0");
-  const fullPrice = price / 100n;
-  const fractionalPart = price % 100n;
+  const divisor = BigInt(100);
+  const fullPrice = price / divisor;
+  const fractionalPart = price % divisor;
   const currencySignFromLocale = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency,

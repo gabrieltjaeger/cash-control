@@ -87,11 +87,11 @@ services:
     profiles: ["development"]
     command: sh -c "npx prisma migrate dev && pnpm dev"
 
-  front: &front
+  front:
     container_name: cash-control-front
     build:
       context: ./front
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.production
       target: production
     restart: always
     environment:
@@ -105,11 +105,15 @@ services:
     command: pnpm start
 
   development-front:
-    <<: *front
     container_name: cash-control-dev-front
+    build:
+      context: ./front
+      dockerfile: Dockerfile
     environment:
       NODE_ENV: development
       API_URL: http://development-api:8000
+    ports:
+      - "3000:3000"
     volumes:
       - ./front:/app
       - /app/node_modules

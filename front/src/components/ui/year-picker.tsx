@@ -11,15 +11,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import {
-  ChangeEvent,
-  KeyboardEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 
 export interface YearPickerProps {
   /** The currently selected date */
@@ -56,7 +48,7 @@ function YearPicker({
   const [focusedYear, setFocusedYear] = useState<number | null>(null);
 
   // Initialize with current date if no value provided
-  const today = useMemo(() => new Date(), []);
+  const today = new Date();
   const currentYear = today.getFullYear();
 
   // Calculate the current decade
@@ -66,33 +58,30 @@ function YearPicker({
   });
 
   // Generate years for the current decade view
-  const years = useMemo(() => {
-    // Create an array of years for the current decade
-    const decadeYears = [];
+  const decadeYears = [];
 
-    // Add the last year from previous decade
-    if (viewDecade > fromYear) {
-      decadeYears.push(viewDecade - 1);
+  // Add the last year from previous decade
+  if (viewDecade > fromYear) {
+    decadeYears.push(viewDecade - 1);
+  }
+
+  // Add the current decade years
+  for (
+    let year = viewDecade;
+    year < viewDecade + 10 && year <= toYear;
+    year++
+  ) {
+    if (year >= fromYear) {
+      decadeYears.push(year);
     }
+  }
 
-    // Add the current decade years
-    for (
-      let year = viewDecade;
-      year < viewDecade + 10 && year <= toYear;
-      year++
-    ) {
-      if (year >= fromYear) {
-        decadeYears.push(year);
-      }
-    }
+  // Add the first year from next decade
+  if (viewDecade + 10 <= toYear) {
+    decadeYears.push(viewDecade + 10);
+  }
 
-    // Add the first year from next decade
-    if (viewDecade + 10 <= toYear) {
-      decadeYears.push(viewDecade + 10);
-    }
-
-    return decadeYears;
-  }, [viewDecade, fromYear, toYear]);
+  const years = decadeYears;
 
   // Reset view when value changes
   useEffect(() => {
@@ -114,154 +103,135 @@ function YearPicker({
     }
   }, [open, value, currentYear]);
 
-  const handleSelectYear = useCallback(
-    (year: number) => {
-      // Preserve the month from the existing value or use January
-      const month = value ? value.getMonth() : 0;
-      const day = value
-        ? Math.min(value.getDate(), new Date(year, month + 1, 0).getDate())
-        : 1;
+  const handleSelectYear = (year: number) => {
+    // Preserve the month from the existing value or use January
+    const month = value ? value.getMonth() : 0;
+    const day = value
+      ? Math.min(value.getDate(), new Date(year, month + 1, 0).getDate())
+      : 1;
 
-      const newDate = new Date(year, month, day);
-      onChange?.(newDate);
-      setOpen(false);
-    },
-    [value, onChange]
-  );
+    const newDate = new Date(year, month, day);
+    onChange?.(newDate);
+    setOpen(false);
+  };
 
-  const handlePrevDecade = useCallback(() => {
+  const handlePrevDecade = () => {
     setViewDecade((prev) => Math.max(fromYear, prev - 10));
-  }, [fromYear]);
+  };
 
-  const handleNextDecade = useCallback(() => {
+  const handleNextDecade = () => {
     setViewDecade((prev) => Math.min(toYear - 9, prev + 10));
-  }, [toYear]);
+  };
 
-  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
     setInputError(false);
-  }, []);
+  };
 
-  const handleInputKeyDown = useCallback(
-    (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter") {
-        console.log("Enter");
-        console.log(inputValue);
-        const parsedYear = Number.parseInt(inputValue, 10);
-        if (
-          !isNaN(parsedYear) &&
-          parsedYear >= fromYear &&
-          parsedYear <= toYear
-        ) {
-          setViewDecade(Math.floor(parsedYear / 10) * 10);
-          setFocusedYear(parsedYear);
-          handleSelectYear(parsedYear);
-        } else {
-          setInputError(true);
-        }
-        e.preventDefault();
+  const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      console.log("Enter");
+      console.log(inputValue);
+      const parsedYear = Number.parseInt(inputValue, 10);
+      if (
+        !isNaN(parsedYear) &&
+        parsedYear >= fromYear &&
+        parsedYear <= toYear
+      ) {
+        setViewDecade(Math.floor(parsedYear / 10) * 10);
+        setFocusedYear(parsedYear);
+        handleSelectYear(parsedYear);
+      } else {
+        setInputError(true);
       }
-    },
-    [inputValue, fromYear, toYear, handleSelectYear]
-  );
+      e.preventDefault();
+    }
+  };
 
   // Keyboard navigation
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent<HTMLDivElement>) => {
-      if (focusedYear === null || !years.includes(focusedYear)) return;
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (focusedYear === null || !years.includes(focusedYear)) return;
 
-      const yearIndex = years.indexOf(focusedYear);
-      const cols = 4;
+    const yearIndex = years.indexOf(focusedYear);
+    const cols = 4;
 
-      switch (e.key) {
-        case "ArrowLeft":
-          e.preventDefault();
-          if (yearIndex % cols === 0) {
-            // If at the left edge, go to previous decade
-            if (viewDecade > fromYear) {
-              handlePrevDecade();
-              // Focus on the right edge of the new decade
-              setFocusedYear(Math.max(focusedYear - 1, fromYear));
-            }
-          } else {
-            setFocusedYear(years[yearIndex - 1]);
+    switch (e.key) {
+      case "ArrowLeft":
+        e.preventDefault();
+        if (yearIndex % cols === 0) {
+          // If at the left edge, go to previous decade
+          if (viewDecade > fromYear) {
+            handlePrevDecade();
+            // Focus on the right edge of the new decade
+            setFocusedYear(Math.max(focusedYear - 1, fromYear));
           }
-          break;
-        case "ArrowRight":
-          e.preventDefault();
-          if (yearIndex % cols === cols - 1 || yearIndex === years.length - 1) {
-            // If at the right edge, go to next decade
-            if (viewDecade + 10 <= toYear) {
-              handleNextDecade();
-              // Focus on the left edge of the new decade
-              setFocusedYear(Math.min(focusedYear + 1, toYear));
-            }
-          } else if (yearIndex < years.length - 1) {
-            setFocusedYear(years[yearIndex + 1]);
+        } else {
+          setFocusedYear(years[yearIndex - 1]);
+        }
+        break;
+      case "ArrowRight":
+        e.preventDefault();
+        if (yearIndex % cols === cols - 1 || yearIndex === years.length - 1) {
+          // If at the right edge, go to next decade
+          if (viewDecade + 10 <= toYear) {
+            handleNextDecade();
+            // Focus on the left edge of the new decade
+            setFocusedYear(Math.min(focusedYear + 1, toYear));
           }
-          break;
-        case "ArrowUp":
-          e.preventDefault();
-          if (yearIndex < cols) {
-            // If at the top edge, go to previous decade
-            if (viewDecade > fromYear) {
-              handlePrevDecade();
-              // Focus on the bottom of the new decade
-              setFocusedYear(Math.max(focusedYear - cols, fromYear));
-            }
-          } else {
-            setFocusedYear(years[yearIndex - cols]);
+        } else if (yearIndex < years.length - 1) {
+          setFocusedYear(years[yearIndex + 1]);
+        }
+        break;
+      case "ArrowUp":
+        e.preventDefault();
+        if (yearIndex < cols) {
+          // If at the top edge, go to previous decade
+          if (viewDecade > fromYear) {
+            handlePrevDecade();
+            // Focus on the bottom of the new decade
+            setFocusedYear(Math.max(focusedYear - cols, fromYear));
           }
-          break;
-        case "ArrowDown":
-          e.preventDefault();
-          if (yearIndex >= years.length - cols) {
-            // If at the bottom edge, go to next decade
-            if (viewDecade + 10 <= toYear) {
-              handleNextDecade();
-              // Focus on the top of the new decade
-              setFocusedYear(Math.min(focusedYear + cols, toYear));
-            }
-          } else if (yearIndex + cols < years.length) {
-            setFocusedYear(years[yearIndex + cols]);
+        } else {
+          setFocusedYear(years[yearIndex - cols]);
+        }
+        break;
+      case "ArrowDown":
+        e.preventDefault();
+        if (yearIndex >= years.length - cols) {
+          // If at the bottom edge, go to next decade
+          if (viewDecade + 10 <= toYear) {
+            handleNextDecade();
+            // Focus on the top of the new decade
+            setFocusedYear(Math.min(focusedYear + cols, toYear));
           }
-          break;
-        case "Enter":
-          e.preventDefault();
-          handleSelectYear(
-            inputValue ? Number.parseInt(inputValue, 10) : focusedYear
-          );
-          break;
-        case "Home":
-          e.preventDefault();
-          setFocusedYear(years[0]);
-          break;
-        case "End":
-          e.preventDefault();
-          setFocusedYear(years[years.length - 1]);
-          break;
-        case "PageUp":
-          e.preventDefault();
-          handlePrevDecade();
-          break;
-        case "PageDown":
-          e.preventDefault();
-          handleNextDecade();
-          break;
-      }
-    },
-    [
-      focusedYear,
-      years,
-      fromYear,
-      toYear,
-      viewDecade,
-      handlePrevDecade,
-      handleNextDecade,
-      handleSelectYear,
-      inputValue,
-    ]
-  );
+        } else if (yearIndex + cols < years.length) {
+          setFocusedYear(years[yearIndex + cols]);
+        }
+        break;
+      case "Enter":
+        e.preventDefault();
+        handleSelectYear(
+          inputValue ? Number.parseInt(inputValue, 10) : focusedYear
+        );
+        break;
+      case "Home":
+        e.preventDefault();
+        setFocusedYear(years[0]);
+        break;
+      case "End":
+        e.preventDefault();
+        setFocusedYear(years[years.length - 1]);
+        break;
+      case "PageUp":
+        e.preventDefault();
+        handlePrevDecade();
+        break;
+      case "PageDown":
+        e.preventDefault();
+        handleNextDecade();
+        break;
+    }
+  };
 
   // Focus the button when focusedYear changes
   const buttonRefs = useRef<Map<number, HTMLButtonElement | null>>(new Map());

@@ -28,7 +28,7 @@ export default function AssociateMensalitiesTable({
   associateId,
 }: AssociateMensalitiesTableProps) {
   const [date, setDate] = useState(new Date());
-  const { data, isLoading } = useFetchAssociateMensalities({
+  const { data, isLoading, error } = useFetchAssociateMensalities({
     id: associateId,
     year: date.getFullYear(),
   });
@@ -53,12 +53,17 @@ export default function AssociateMensalitiesTable({
             }}
           />
           {isLoading && <LoadingSpinner />}
-          {!isLoading && !data && (
+          {error && (
+            <div className="flex items-center justify-center h-full text-destructive">
+              Error: {error.message}
+            </div>
+          )}
+          {!isLoading && !error && !data && (
             <div className="flex items-center justify-center h-full">
               Some error occurred while fetching mensalities.
             </div>
           )}
-          {!isLoading && data && (
+          {!isLoading && !error && data && (
             <Table>
               <TableHeader>
                 <TableRow>

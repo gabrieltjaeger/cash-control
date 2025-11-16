@@ -15,7 +15,7 @@ interface AssociateDetailsCardProps {
 export default function AssociateDetailsCard({
   associateId,
 }: AssociateDetailsCardProps) {
-  const { data, isLoading } = useFetchAssociate({ id: associateId });
+  const { data, isLoading, error } = useFetchAssociate({ id: associateId });
 
   return (
     <motion.div

@@ -66,20 +66,16 @@ export default function RegisterMensalityForm() {
 
   const onSubmit = async (data: RegisterMensalityFormSchema) => {
     console.log(data);
-    try {
-      const response = await registerMensality(data);
 
-      if (response && response.message) {
-        throw new Error(response.message);
-      }
+    const response = await registerMensality(data);
 
-      form.reset();
-      toast.success("Mensality registered successfully");
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Unexpected error");
-    } finally {
+    if (response && response.message) {
+      toast.error(response.message);
       return;
     }
+
+    form.reset();
+    toast.success("Mensality registered successfully");
   };
 
   const [date, setDate] = useState<Date>(new Date());

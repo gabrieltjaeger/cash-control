@@ -27,7 +27,11 @@ import { motion } from "motion/react";
 
 export default function ListMensalities() {
   const [date, setDate] = useState<Date>(new Date());
-  const { data: mensalities, isLoading } = useListMensalities({
+  const {
+    data: mensalities,
+    isLoading,
+    error,
+  } = useListMensalities({
     year: date.getFullYear(),
   });
 
@@ -58,12 +62,20 @@ export default function ListMensalities() {
                 <LoadingSpinner />
               </div>
             )}
-            {!isLoading && mensalities && mensalities.length === 0 && (
-              <div className="flex items-center justify-center h-full">
-                No mensalities registered for {date.getFullYear()}.
+            {error && (
+              <div className="flex items-center justify-center h-full text-destructive">
+                Error: {error.message}
               </div>
             )}
-            {!isLoading && mensalities && mensalities.length > 0 && (
+            {!isLoading &&
+              !error &&
+              mensalities &&
+              mensalities.length === 0 && (
+                <div className="flex items-center justify-center h-full">
+                  No mensalities registered for {date.getFullYear()}.
+                </div>
+              )}
+            {!isLoading && !error && mensalities && mensalities.length > 0 && (
               <Table>
                 <TableHeader>
                   <TableRow>

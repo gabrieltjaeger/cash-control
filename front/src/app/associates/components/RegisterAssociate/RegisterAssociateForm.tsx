@@ -36,20 +36,15 @@ export default function RegisterAssociateForm() {
   });
 
   const onSubmit = async (data: RegisterAssociateFormSchema) => {
-    try {
-      const response = await registerAssociate(data);
+    const response = await registerAssociate(data);
 
-      if (response && response.message) {
-        throw new Error(response.message);
-      }
-
-      form.reset();
-      toast.success("Associate registered successfully");
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Unexpected error");
-    } finally {
+    if (response && response.message) {
+      toast.error(response.message);
       return;
     }
+
+    form.reset();
+    toast.success("Associate registered successfully");
   };
 
   return (

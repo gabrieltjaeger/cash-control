@@ -25,7 +25,7 @@ export function PaymentsTable({ selectBy, date }: PaymentsTableProps) {
   const locale = Intl.DateTimeFormat().resolvedOptions().locale;
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-  const { data, isLoading } = useListPayments({
+  const { data, isLoading, error } = useListPayments({
     initialDate: date ? date.toISOString() : new Date().toISOString(),
     selectBy,
     timeZone,
@@ -40,13 +40,23 @@ export function PaymentsTable({ selectBy, date }: PaymentsTableProps) {
     );
   }
 
-  if (!isLoading && data.payments.length === 0) {
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-33 text-destructive">
+        Error: {error.message}
+      </div>
+    );
+  }
+
+  if (!isLoading && !error && data && data.payments.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-33">
         No payments found for this {selectBy}.
       </div>
     );
   }
+
+  if (!data) return null;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-33 overflow-x-hidden">

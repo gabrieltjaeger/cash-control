@@ -28,7 +28,7 @@ import { Suspense, memo } from "react";
 
 const ListAssociates = memo(function ListAssociates() {
   const { page, query, setPage, setQuery } = useQueryAndPageParams();
-  const { data, isLoading } = useListAssociates({
+  const { data, isLoading, error } = useListAssociates({
     page,
     name: query,
   });
@@ -55,12 +55,17 @@ const ListAssociates = memo(function ListAssociates() {
                 <LoadingSpinner />
               </div>
             )}
-            {!isLoading && data.associates.length === 0 && (
+            {error && (
+              <div className="flex items-center justify-center h-full text-destructive">
+                Error: {error.message}
+              </div>
+            )}
+            {!isLoading && !error && data?.associates.length === 0 && (
               <div className="flex items-center justify-center h-full">
                 No associates found.
               </div>
             )}
-            {!isLoading && data.associates.length > 0 && (
+            {!isLoading && !error && data && data.associates.length > 0 && (
               <>
                 <Table>
                   <TableHeader>

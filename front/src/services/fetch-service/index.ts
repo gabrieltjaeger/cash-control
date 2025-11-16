@@ -16,6 +16,9 @@ interface RequestProps {
 class FetchService {
   private async request({ method, url, data, headers }: RequestProps) {
     try {
+      console.log(`[FetchService] ${method} ${url}`);
+      console.log(`[FetchService] Data:`, data);
+
       const response = await fetch(url, {
         method,
         headers: {
@@ -23,29 +26,29 @@ class FetchService {
           ...headers,
         },
         body: data ? JSON.stringify(data) : undefined,
-        cache: "force-cache",
+        cache: method === "GET" ? "default" : "no-store",
       });
+
+      console.log(`[FetchService] Response status:`, response.status);
 
       const responseData =
         response.headers.get("Content-Type")?.includes("application/json") &&
         (await response.json());
 
-      if (!response.ok && responseData) {
-        throw new Error(responseData.message);
+      if (!response.ok) {
+        const errorMessage =
+          responseData?.message ||
+          `HTTP ${response.status}: ${response.statusText}`;
+        throw new Error(errorMessage);
       }
 
       return {
         data: responseData,
       };
     } catch (error) {
-      if (error instanceof Error)
-        return {
-          message: error.message,
-        };
+      console.error(`[FetchService] Error:`, error);
 
-      return {
-        message: `Unexpected error: ${error}`,
-      };
+      throw error;
     }
   }
 

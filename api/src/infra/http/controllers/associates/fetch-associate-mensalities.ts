@@ -37,11 +37,11 @@ export async function fetchAssociateMensalitiesController(
       year,
     });
 
-    return response
-      .status(200)
-      .send(
-        mensalities.map((mensality) => MensalityPresenter.toDTO(mensality!))
-      );
+    const mensalitiesDTO = mensalities
+      .filter((mensality) => mensality !== undefined)
+      .map((mensality) => MensalityPresenter.toDTO(mensality));
+
+    return response.status(200).send(mensalitiesDTO);
   } catch (error) {
     next(error);
   }

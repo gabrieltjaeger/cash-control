@@ -24,9 +24,9 @@ export class AssociatePresenter {
       payments: associate.payments.map((payment) =>
         PaymentPresenter.toDTO(payment)
       ),
-      mensalities: associate.mensalities.flatMap((mensality) =>
-        MensalityPresenter.toDTO(mensality.mensality ?? undefined)
-      ),
+      mensalities: associate.mensalities
+        .filter((mensality) => mensality.mensality !== undefined)
+        .map((mensality) => MensalityPresenter.toDTO(mensality.mensality!)),
       createdAt: associate.createdAt,
       updatedAt: associate.updatedAt,
     };

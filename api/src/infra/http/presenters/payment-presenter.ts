@@ -14,9 +14,9 @@ export class PaymentPresenter {
         valueInCents: payment.valueInCents.toString().normalize(),
         associateId: payment.associateId,
         associate: AssociatePresenter.toDTO(payment.associate ?? undefined),
-        mensalities: payment.mensalities.flatMap((mensality) =>
-          MensalityPresenter.toDTO(mensality.mensality ?? undefined)
-        ),
+        mensalities: payment.mensalities
+          .filter((mensality) => mensality.mensality !== undefined)
+          .map((mensality) => MensalityPresenter.toDTO(mensality.mensality!)),
         createdAt: payment.createdAt,
         updatedAt: payment.updatedAt,
       };

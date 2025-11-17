@@ -1,3 +1,5 @@
+import { DomainError } from "@core/errors/domain-error";
+import { ResourceNotFoundError } from "@core/errors/resource-not-found-error";
 import { Month } from "@core/entities/mensality";
 import { Payment } from "@core/entities/payment";
 import { PaymentMensality } from "@core/entities/payment-mensality";
@@ -24,7 +26,7 @@ export class RegisterPaymentUseCase {
     mensalities,
   }: RegisterPaymentRequest): Promise<void> {
     if (mensalities.length === 0) {
-      throw new Error("No mensalities provided");
+      throw new DomainError("No mensalities provided", 400);
     }
 
     const associate = await this.associatesRepository.find("minimal", {
@@ -32,7 +34,7 @@ export class RegisterPaymentUseCase {
     });
 
     if (!associate) {
-      throw new Error("Associate not found");
+      throw new ResourceNotFoundError("Associate", `id ${associateId}`);
     }
 
     const _mensalities = await Promise.all(
@@ -43,7 +45,10 @@ export class RegisterPaymentUseCase {
         });
 
         if (!mensality) {
-          throw new Error(`Mensality ${month}/${year} not registered`);
+          throw new ResourceNotFoundError(
+            "Mensality",
+            `month ${month} and year ${year}`
+          );
         }
 
         return mensality;

@@ -1,3 +1,4 @@
+import { ResourceNotFoundError } from "@core/errors/resource-not-found-error";
 import { PaymentsRepository } from "@core/repositories/payments-repository";
 
 interface DeletePaymentUseCaseRequest {
@@ -11,7 +12,7 @@ export class DeletePaymentUseCase {
     const payment = await this.paymentsRepository.find("minimal", { id });
 
     if (!payment) {
-      throw new Error("Payment not found");
+      throw new ResourceNotFoundError("Payment", `id ${id}`);
     }
 
     await this.paymentsRepository.delete(payment);

@@ -1,3 +1,5 @@
+import { ExistingResourceError } from "@core/errors/existing-resource-error";
+import { ResourceNotFoundError } from "@core/errors/resource-not-found-error";
 import { Month } from "@core/entities/mensality";
 import { MensalitiesRepository } from "@core/repositories/mensalities-repository";
 
@@ -20,7 +22,7 @@ export class UpdateMensalityUseCase {
     const mensality = await this.mensalitiesRepository.find("minimal", { id });
 
     if (!mensality) {
-      throw new Error("Mensality not found");
+      throw new ResourceNotFoundError("Mensality", `id ${id}`);
     }
 
     if (
@@ -36,7 +38,7 @@ export class UpdateMensalityUseCase {
       );
 
       if (existingMensality && !existingMensality.id.equals(id)) {
-        throw new Error("Mensality already exists");
+        throw new ExistingResourceError("Mensality", `month ${newMonth} and year ${newYear}`);
       }
 
       if (month) mensality.month = month;

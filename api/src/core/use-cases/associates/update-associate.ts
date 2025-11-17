@@ -1,5 +1,6 @@
 import { AssociatesRepository } from "@core/repositories/associates-repository";
 import { ExistingResourceError } from "@core/errors/existing-resource-error";
+import { ResourceNotFoundError } from "@core/errors/resource-not-found-error";
 
 interface UpdateAssociateUseCaseRequest {
   id: string;
@@ -20,7 +21,7 @@ export class UpdateAssociateUseCase {
     const associate = await this.associatesRepository.find("minimal", { id });
 
     if (!associate) {
-      throw new Error("Associate not found");
+      throw new ResourceNotFoundError("Associate", `id ${id}`);
     }
 
     if (email && email !== associate.email) {

@@ -32,14 +32,14 @@ export async function fetchAssociateMensalitiesController(
         "fetchAssociateMensalitiesUseCase"
       );
 
-    const mensalities = await fetchAssociateMensalitiesUseCase.execute({
+    const { associate } = await fetchAssociateMensalitiesUseCase.execute({
       id,
       year,
     });
 
-    const mensalitiesDTO = mensalities
-      .filter((mensality) => mensality !== undefined)
-      .map((mensality) => MensalityPresenter.toDTO(mensality));
+    const mensalitiesDTO = associate.mensalities
+      .filter((am) => am.mensality !== undefined && am.mensality !== null)
+      .map((am) => MensalityPresenter.toDTO(am.mensality!));
 
     return response.status(200).send(mensalitiesDTO);
   } catch (error) {

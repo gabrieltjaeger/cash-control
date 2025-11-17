@@ -1,4 +1,5 @@
 import { AssociatesRepository } from "@core/repositories/associates-repository";
+import { ResourceNotFoundError } from "@core/errors/resource-not-found-error";
 
 interface FetchAssociateMensalitiesUseCaseRequest {
   id: string;
@@ -14,7 +15,7 @@ export class FetchAssociateMensalitiesUseCase {
       year,
     });
 
-    if (!associate) throw new Error("Associate not found");
+    if (!associate) throw new ResourceNotFoundError("Associate", `id ${id}`);
 
     return { associate };
   }

@@ -41,6 +41,10 @@ export async function updateAssociateController(
       body: { fullName, email, phone },
     } = updateAssociateSchema.parse(request);
 
+    if (fullName === undefined && email === undefined && phone === undefined) {
+      throw new Error("At least one field must be provided for update");
+    }
+
     const updateAssociateUseCase = container.resolve<UpdateAssociateUseCase>(
       "updateAssociateUseCase"
     );

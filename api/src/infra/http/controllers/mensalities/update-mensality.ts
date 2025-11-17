@@ -53,6 +53,14 @@ export async function updateMensalityController(
       body: { month, year, priceInCents },
     } = updateMensalitySchema.parse(request);
 
+    if (
+      month === undefined &&
+      year === undefined &&
+      priceInCents === undefined
+    ) {
+      throw new Error("At least one field must be provided for update");
+    }
+
     const updateMensalityUseCase = container.resolve<UpdateMensalityUseCase>(
       "updateMensalityUseCase"
     );

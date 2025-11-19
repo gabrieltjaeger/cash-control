@@ -2,8 +2,8 @@ import { prisma } from "@infra/database/prisma-client";
 
 import { Payment } from "@core/entities/payment";
 import {
-  PaymentsRepository,
-  PaymentsRepositoryFilterOptions,
+    PaymentsRepository,
+    PaymentsRepositoryFilterOptions,
 } from "@core/repositories/payments-repository";
 import { RepositoryQueryMode } from "@core/types/repository-query-mode";
 import { PrismaPaymentMapper } from "@infra/database/mappers/prisma-payment-mapper";
@@ -98,7 +98,7 @@ export class PrismaPaymentsRepository implements PaymentsRepository {
   async list(
     mode: RepositoryQueryMode,
     filters: PaymentsRepositoryFilterOptions,
-    page: number = 1,
+    page?: number,
     take: number = 10
   ): Promise<Payment[] & { next?: number | null; prev?: number | null }> {
     const include = this.buildInclude(mode);
@@ -116,10 +116,15 @@ export class PrismaPaymentsRepository implements PaymentsRepository {
       prisma.payment.count({ where }),
     ]);
 
-    return Object.assign(payments.map(PrismaPaymentMapper.toEntity), {
-      next: count > page * take ? page + 1 : null,
-      prev: page > 1 ? page - 1 : null,
-    });
+    return Object.assign(
+      payments.map(PrismaPaymentMapper.toEntity),
+      page && take
+        ? {
+            next: count > page * take ? page + 1 : null,
+            prev: page > 1 ? page - 1 : null,
+          }
+        : {}
+    );
   }
 
   private buildWhere(

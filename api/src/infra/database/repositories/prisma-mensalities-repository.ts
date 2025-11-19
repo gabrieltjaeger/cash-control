@@ -4,8 +4,8 @@ import { RepositoryQueryMode } from "@core/types/repository-query-mode";
 
 import { Mensality } from "@core/entities/mensality";
 import {
-  MensalitiesRepository,
-  MensalitiesRepositoryFilterOptions,
+    MensalitiesRepository,
+    MensalitiesRepositoryFilterOptions,
 } from "@core/repositories/mensalities-repository";
 import { PrismaMensalityMapper } from "@infra/database/mappers/prisma-mensality-mapper";
 

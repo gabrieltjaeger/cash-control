@@ -5,6 +5,10 @@ import { Router } from "express";
 
 export const router = Router();
 
+router.get("/status", (req, res) => {
+  res.json({ status: "ok" });
+});
+
 router.use("/payments", paymentsRouter);
 router.use("/mensalities", mensalitiesRouter);
 router.use("/associates", associatesRouter);

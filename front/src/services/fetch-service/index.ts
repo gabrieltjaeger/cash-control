@@ -16,20 +16,24 @@ interface RequestProps {
 class FetchService {
   private async request({ method, url, data, headers }: RequestProps) {
     try {
-      console.log(`[FetchService] ${method} ${url}`);
-      console.log(`[FetchService] Data:`, data);
+      const headersInit: HeadersInit = {
+        ...headers,
+      };
+
+      if (!(data instanceof FormData)) {
+        headersInit["Content-Type"] = "application/json";
+      }
 
       const response = await fetch(url, {
         method,
-        headers: {
-          "Content-Type": "application/json",
-          ...headers,
-        },
-        body: data ? JSON.stringify(data) : undefined,
+        headers: headersInit,
+        body: data ? (data instanceof FormData ? data : JSON.stringify(data)) : undefined,
         cache: method === "GET" ? "default" : "no-store",
       });
 
-      console.log(`[FetchService] Response status:`, response.status);
+      if (process.env.NODE_ENV === "development") {
+        console.log(`[FetchService] Response status:`, response.status);
+      }
 
       const responseData =
         response.headers.get("Content-Type")?.includes("application/json") &&

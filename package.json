@@ -1,6 +1,7 @@
 {
   "name": "cash-control",
   "version": "1.0.0",
+  "packageManager": "pnpm@9.12.3",
   "private": true,
   "scripts": {
     "dev": "docker-compose --profile development up",

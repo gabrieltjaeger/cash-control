@@ -1,4 +1,4 @@
-import { SystemConfig } from "@core/entities/system-config";
+import { SystemConfig, SystemConfigProps } from "@core/entities/system-config";
 import { CUID } from "@core/entities/types/CUID";
 import { Prisma } from "@prisma/client";
 
@@ -13,7 +13,7 @@ export class PrismaSystemConfigMapper {
       valueType: raw.valueType,
       createdAt: raw.createdAt,
       updatedAt: raw.updatedAt,
-    });
+    } as SystemConfigProps);
   }
 
   static toPersistence(
@@ -23,7 +23,7 @@ export class PrismaSystemConfigMapper {
       id: systemConfig.id.value,
       key: systemConfig.key,
       value: systemConfig.value,
-      valueType: systemConfig.value,
+      valueType: systemConfig.valueType,
       createdAt: systemConfig.createdAt,
       updatedAt: systemConfig.updatedAt,
     };

@@ -2,8 +2,10 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-# Install pnpm
-RUN npm install -g pnpm
+# Enable pnpm via Corepack (bundled with Node.js)
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
 # Copy package files
 COPY package.json pnpm-lock.yaml* ./

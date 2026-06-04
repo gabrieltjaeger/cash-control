@@ -2,12 +2,25 @@ import { prisma } from "@infra/database/prisma-client";
 
 import { Payment } from "@core/entities/payment";
 import {
-  PaymentsRepository,
-  PaymentsRepositoryFilterOptions,
+    PaymentsRepository,
+    PaymentsRepositoryFilterOptions,
 } from "@core/repositories/payments-repository";
 import { RepositoryQueryMode } from "@core/types/repository-query-mode";
 import { PrismaPaymentMapper } from "@infra/database/mappers/prisma-payment-mapper";
 import { PrismaPaymentMensalityMapper } from "../mappers/prisma-payment-mensality-mapper";
+
+type PaymentFindManyArgs = NonNullable<
+  Parameters<(typeof prisma.payment)["findMany"]>[0]
+>;
+type PaymentWhereInput = PaymentFindManyArgs extends { where?: infer W }
+  ? W
+  : never;
+type PaymentInclude = PaymentFindManyArgs extends { include?: infer I }
+  ? I
+  : never;
+type PaymentWhereUniqueInput = Parameters<
+  (typeof prisma.payment)["findUnique"]
+>[0]["where"];
 
 export class PrismaPaymentsRepository implements PaymentsRepository {
   async create(payment: Payment): Promise<void> {
@@ -28,10 +41,15 @@ export class PrismaPaymentsRepository implements PaymentsRepository {
           })),
         }),
       ])
-      .catch((error) => {
+      .catch((error: unknown) => {
+        const prismaError = error as {
+          code?: string;
+          meta?: { modelName?: string };
+        };
+
         if (
-          error.code === "P2002" &&
-          error.meta.modelName.includes("AssociateMensality")
+          prismaError?.code === "P2002" &&
+          prismaError.meta?.modelName?.includes("AssociateMensality")
         )
           throw new Error(
             "The associate has already paid for a mensality in this request"
@@ -63,47 +81,99 @@ export class PrismaPaymentsRepository implements PaymentsRepository {
   }
 
   async find(
-    _: RepositoryQueryMode,
-    { id, date, associate }: PaymentsRepositoryFilterOptions
+    mode: RepositoryQueryMode,
+    filters: PaymentsRepositoryFilterOptions
   ): Promise<Payment | null> {
-    const payment = await prisma.payment.findUnique({
-      where: { id, date, associateId: associate?.id },
-      include: { associate: true },
-    });
+    const include = this.buildInclude(mode);
+    const whereUnique = this.buildUniqueWhere(filters);
+    const where = this.buildWhere(filters);
+
+    const payment = whereUnique
+      ? await prisma.payment.findUnique({ where: whereUnique, include })
+      : await prisma.payment.findFirst({ where, include });
 
     return payment ? PrismaPaymentMapper.toEntity(payment) : null;
   }
 
   async list(
     mode: RepositoryQueryMode,
-    { since, until }: PaymentsRepositoryFilterOptions,
-    page: number,
+    filters: PaymentsRepositoryFilterOptions,
+    page?: number,
     take: number = 10
   ): Promise<Payment[] & { next?: number | null; prev?: number | null }> {
+    const include = this.buildInclude(mode);
+    const where = this.buildWhere(filters);
+
     const [payments, count] = await Promise.all([
       prisma.payment.findMany({
-        where: {
-          date: {
-            ...(!!since && { gte: since }),
-            ...(!!until && { lte: until }),
-          },
-        },
-        ...(!!page &&
-          !!take && {
-            skip: (page - 1) * take,
-            take,
-          }),
-        include: {
-          ...(mode === "expanded" && { associate: true }),
-          ...(mode === "deep" && { associate: true, mensalities: true }),
-        },
+        where,
+        ...(page && take && {
+          skip: (page - 1) * take,
+          take,
+        }),
+        include,
       }),
-      prisma.payment.count(),
+      prisma.payment.count({ where }),
     ]);
 
-    return Object.assign(payments.map(PrismaPaymentMapper.toEntity), {
-      next: count > page * take ? page + 1 : null,
-      prev: page > 1 ? page - 1 : null,
-    });
+    return Object.assign(
+      payments.map(PrismaPaymentMapper.toEntity),
+      page && take
+        ? {
+            next: count > page * take ? page + 1 : null,
+            prev: page > 1 ? page - 1 : null,
+          }
+        : {}
+    );
+  }
+
+  private buildWhere(
+    { id, date, since, until, associate, mensalities }: PaymentsRepositoryFilterOptions
+  ): PaymentWhereInput {
+    const dateFilter = {
+      ...(date && { equals: date }),
+      ...(since && { gte: since }),
+      ...(until && { lte: until }),
+    };
+
+    return {
+      ...(id && { id }),
+      ...(Object.keys(dateFilter).length > 0 && { date: dateFilter }),
+      ...(associate?.id && { associateId: associate.id }),
+      ...(mensalities?.length && {
+        mensalities: {
+          some: {
+            mensalityId: {
+              in: mensalities.map((mensality) => mensality.id),
+            },
+          },
+        },
+      }),
+    };
+  }
+
+  private buildUniqueWhere(
+    { id }: PaymentsRepositoryFilterOptions
+  ): PaymentWhereUniqueInput | null {
+    if (id) return { id };
+    return null;
+  }
+
+  private buildInclude(mode: RepositoryQueryMode): PaymentInclude | undefined {
+    if (mode === "minimal") return undefined;
+
+    const include: PaymentInclude = {
+      associate: true,
+    };
+
+    if (mode === "deep") {
+      include.mensalities = {
+        include: {
+          mensality: true,
+        },
+      };
+    }
+
+    return include;
   }
 }

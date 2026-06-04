@@ -41,6 +41,7 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile
+      network: host
     restart: always
     environment:
       NODE_ENV: ${NODE_ENV:-production}
@@ -81,7 +82,8 @@ services:
       REDIS_HOST: cache
       REDIS_PORT: 6379
     volumes:
-      - ./:/app
+      - ./api/src:/app/src
+      - ./api/package.json:/app/package.json
     depends_on:
       - smtp
     profiles: ["development"]
@@ -92,6 +94,7 @@ services:
     build:
       context: ./front
       dockerfile: Dockerfile.production
+      network: host
       target: production
     restart: always
     environment:
@@ -109,6 +112,7 @@ services:
     build:
       context: ./front
       dockerfile: Dockerfile
+      network: host
     working_dir: /app/front
     environment:
       NODE_ENV: development
@@ -116,7 +120,9 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./:/app
+      - ./front/src:/app/src
+      - ./front/public:/app/public
+      - ./front/package.json:/app/package.json
     depends_on:
       - development-api
     profiles: ["development"]

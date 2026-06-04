@@ -1,0 +1,10 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "files": [],
+    "references": [
+        { "path": "./packages/jaeger-shared" },
+        { "path": "./packages/jaeger-core" },
+        { "path": "./apps/backend/tsconfig.build.json" },
+        { "path": "./apps/frontend" }
+    ]
+}

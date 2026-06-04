@@ -1,0 +1,24 @@
+{
+    "name": "@jaeger/shared",
+    "version": "0.0.1",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        }
+    },
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "files": ["dist"],
+    "scripts": {
+        "build": "tsc --build tsconfig.json",
+        "typecheck": "tsc --build tsconfig.json --dry",
+        "clean": "tsc --build tsconfig.json --clean && rm -rf dist",
+        "dev": "tsc --build tsconfig.json --watch"
+    },
+    "dependencies": {
+        "zod": "^4.4.3"
+    }
+}

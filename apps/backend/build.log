@@ -1,0 +1,68 @@
+
+> api@1.0.0 build /home/gabriel/Repositories/Projects/Personal/cash-control/api
+> tsc
+
+src/core/use-cases/associates/update-associate.spec.ts(1,46): error TS2307: Cannot find module '@test/repositories/in-memory-associates-repository' or its corresponding type declarations.
+src/core/use-cases/associates/update-associate.spec.ts(3,31): error TS2307: Cannot find module '@test/factories/make-associate' or its corresponding type declarations.
+src/core/use-cases/associates/update-associate.spec.ts(10,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/core/use-cases/associates/update-associate.spec.ts(11,3): error TS2304: Cannot find name 'beforeEach'.
+src/core/use-cases/associates/update-associate.spec.ts(16,3): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/core/use-cases/associates/update-associate.spec.ts(27,5): error TS2304: Cannot find name 'expect'.
+src/core/use-cases/associates/update-associate.spec.ts(34,3): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/core/use-cases/associates/update-associate.spec.ts(35,11): error TS2304: Cannot find name 'expect'.
+src/core/use-cases/associates/update-associate.spec.ts(42,3): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/core/use-cases/associates/update-associate.spec.ts(48,11): error TS2304: Cannot find name 'expect'.
+src/core/use-cases/associates/update-associate.spec.ts(56,3): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/core/use-cases/associates/update-associate.spec.ts(62,11): error TS2304: Cannot find name 'expect'.
+src/core/use-cases/mensalities/update-mensality.spec.ts(1,47): error TS2307: Cannot find module '@test/repositories/in-memory-mensalities-repository' or its corresponding type declarations.
+src/core/use-cases/mensalities/update-mensality.spec.ts(3,31): error TS2307: Cannot find module '@test/factories/make-mensality' or its corresponding type declarations.
+src/core/use-cases/mensalities/update-mensality.spec.ts(10,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/core/use-cases/mensalities/update-mensality.spec.ts(11,3): error TS2304: Cannot find name 'beforeEach'.
+src/core/use-cases/mensalities/update-mensality.spec.ts(16,3): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/core/use-cases/mensalities/update-mensality.spec.ts(22,7): error TS2322: Type '"JANUARY"' is not assignable to type 'Month | undefined'.
+src/core/use-cases/mensalities/update-mensality.spec.ts(24,7): error TS2322: Type 'number' is not assignable to type 'bigint'.
+src/core/use-cases/mensalities/update-mensality.spec.ts(27,5): error TS2304: Cannot find name 'expect'.
+src/core/use-cases/mensalities/update-mensality.spec.ts(34,3): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/core/use-cases/mensalities/update-mensality.spec.ts(35,11): error TS2304: Cannot find name 'expect'.
+src/core/use-cases/mensalities/update-mensality.spec.ts(38,9): error TS2322: Type '"JANUARY"' is not assignable to type 'Month | undefined'.
+src/core/use-cases/mensalities/update-mensality.spec.ts(40,9): error TS2322: Type 'number' is not assignable to type 'bigint'.
+src/core/use-cases/mensalities/update-mensality.spec.ts(45,3): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/core/use-cases/mensalities/update-mensality.spec.ts(51,11): error TS2304: Cannot find name 'expect'.
+src/core/use-cases/mensalities/update-mensality.spec.ts(54,9): error TS2322: Type '"JANUARY"' is not assignable to type 'Month | undefined'.
+src/core/use-cases/payments/delete-payment.spec.ts(1,44): error TS2307: Cannot find module '@test/repositories/in-memory-payments-repository' or its corresponding type declarations.
+src/core/use-cases/payments/delete-payment.spec.ts(3,29): error TS2307: Cannot find module '@test/factories/make-payment' or its corresponding type declarations.
+src/core/use-cases/payments/delete-payment.spec.ts(9,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/core/use-cases/payments/delete-payment.spec.ts(10,3): error TS2304: Cannot find name 'beforeEach'.
+src/core/use-cases/payments/delete-payment.spec.ts(15,3): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/core/use-cases/payments/delete-payment.spec.ts(23,5): error TS2304: Cannot find name 'expect'.
+src/core/use-cases/payments/delete-payment.spec.ts(26,3): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/core/use-cases/payments/delete-payment.spec.ts(27,11): error TS2304: Cannot find name 'expect'.
+src/core/use-cases/payments/register-payment.spec.ts(1,44): error TS2307: Cannot find module '@test/repositories/in-memory-payments-repository' or its corresponding type declarations.
+src/core/use-cases/payments/register-payment.spec.ts(3,47): error TS2307: Cannot find module '@test/repositories/in-memory-mensalities-repository' or its corresponding type declarations.
+src/core/use-cases/payments/register-payment.spec.ts(4,46): error TS2307: Cannot find module '@test/repositories/in-memory-associates-repository' or its corresponding type declarations.
+src/core/use-cases/payments/register-payment.spec.ts(5,31): error TS2307: Cannot find module '@test/factories/make-associate' or its corresponding type declarations.
+src/core/use-cases/payments/register-payment.spec.ts(6,31): error TS2307: Cannot find module '@test/factories/make-mensality' or its corresponding type declarations.
+src/core/use-cases/payments/register-payment.spec.ts(15,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/core/use-cases/payments/register-payment.spec.ts(16,3): error TS2304: Cannot find name 'beforeEach'.
+src/core/use-cases/payments/register-payment.spec.ts(27,3): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/core/use-cases/payments/register-payment.spec.ts(45,5): error TS2304: Cannot find name 'expect'.
+src/core/use-cases/payments/register-payment.spec.ts(48,3): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/core/use-cases/payments/register-payment.spec.ts(52,11): error TS2304: Cannot find name 'expect'.
+src/core/use-cases/payments/register-payment.spec.ts(61,3): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/core/use-cases/payments/register-payment.spec.ts(65,11): error TS2304: Cannot find name 'expect'.
+src/core/use-cases/payments/register-payment.spec.ts(79,3): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/core/use-cases/payments/register-payment.spec.ts(83,11): error TS2304: Cannot find name 'expect'.
+src/core/use-cases/payments/register-payment.spec.ts(89,13): error TS2322: Type '"JANUARY"' is not assignable to type 'Month'.
+src/infra/http/presenters/presenter-error-mapper.ts(1,29): error TS2307: Cannot find module '@/core/errors/domain-error' or its corresponding type declarations.
+src/infra/http/presenters/presenter-error-mapper.ts(2,39): error TS2307: Cannot find module '@/core/errors/existing-resource-error' or its corresponding type declarations.
+src/infra/http/presenters/presenter-error-mapper.ts(3,39): error TS2307: Cannot find module '@/core/errors/resource-not-found-error' or its corresponding type declarations.
+src/infra/http/presenters/presenter-error-mapper.ts(4,22): error TS2307: Cannot find module '@/infra/types/view' or its corresponding type declarations.
+test/repositories/in-memory-associates-repository.ts(5,14): error TS2420: Class 'InMemoryAssociatesRepository' incorrectly implements interface 'AssociatesRepository'.
+  Type 'InMemoryAssociatesRepository' is missing the following properties from type 'AssociatesRepository': delete, list
+test/repositories/in-memory-mensalities-repository.ts(5,14): error TS2420: Class 'InMemoryMensalitiesRepository' incorrectly implements interface 'MensalitiesRepository'.
+  Type 'InMemoryMensalitiesRepository' is missing the following properties from type 'MensalitiesRepository': delete, list
+test/repositories/in-memory-payments-repository.ts(5,14): error TS2420: Class 'InMemoryPaymentsRepository' incorrectly implements interface 'PaymentsRepository'.
+  Property 'update' is missing in type 'InMemoryPaymentsRepository' but required in type 'PaymentsRepository'.
+vite.config.ts(1,30): error TS2307: Cannot find module 'vitest/config' or its corresponding type declarations.
+vite.config.ts(2,27): error TS2307: Cannot find module 'vite-tsconfig-paths' or its corresponding type declarations.
+ ELIFECYCLE  Command failed with exit code 2.

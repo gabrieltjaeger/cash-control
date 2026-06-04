@@ -1,3 +1,5 @@
 packages:
-  - 'api'
-  - 'front'
+  - "apps/*"
+  - "packages/*"
+allowBuilds:
+  esbuild: false

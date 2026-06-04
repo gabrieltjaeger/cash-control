@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "rootDir": "./src",
+    "types": ["node"],
+    "paths": {
+      "@core/*": [
+        "./src/core/*"
+      ],
+      "@infra/*": [
+        "./src/infra/*"
+      ],
+      "@shared/*": [
+        "./src/shared/*"
+      ]
+    }
+  },
+    "include": ["src/**/*.ts"],
+    "exclude": ["dist", "node_modules", "tests", "vitest.config.ts"],
+    "references": [
+        { "path": "../../packages/jaeger-shared" },
+        { "path": "../../packages/jaeger-core" },
+    ]
+}

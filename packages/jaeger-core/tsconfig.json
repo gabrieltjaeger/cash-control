@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "paths": {
+            "@/application/*": ["./src/application/*"],
+            "@/auth/*": ["./src/auth/*"],
+            "@/contracts/*": ["./src/contracts/*"],
+            "@/domain/*": ["./src/domain/*"],
+            "@/errors/*": ["./src/errors/*"],
+            "@/logic/*": ["./src/logic/*"],
+            "@/messaging/*": ["./src/messaging/*"],
+            }
+    },
+    "include": ["src/**/*.ts"],
+    "exclude": ["node_modules", "dist"],
+    "references": [
+        { "path": "../shared-contracts" }
+    ]
+}
